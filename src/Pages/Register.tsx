@@ -7,7 +7,7 @@ const register = () => {
       <div className="w-[33%] h-fit bg-[#11112B] rounded-2xl flex items-center justify-center">
         <form className="rounded m-[2rem]">
           <h2 className="text-[1.25rem] mb-1 text-center font-medium text-[#FFFFFF]">
-            Sign in
+            Create an account
           </h2>
           <div className="mb-2">
             <label className=" text-[#FFFFFF] text-sm font-medium mb-2">
