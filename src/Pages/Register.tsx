@@ -1,12 +1,46 @@
-import React from "react";
+import React, { FormEvent } from "react";
 import "../app/globals.css";
 import { IoClose } from "react-icons/io5";
-
+import { useState } from "react";
+import { handleSendOtp } from "../http/otp";
 const register = () => {
+  // const [email, setEmail] = useState("");
+  // const [username, setUsername] = useState("");
+  // const [dob, setDob] = useState("");
+  // const [password, setPassword] = useState("");
+  // const [phone, setPhone] = useState("");
+
+  const handleRegister = (e: any) => {
+    e.preventDefault();
+    const form = document.getElementById("registerform");
+    let formData = new FormData(form as HTMLFormElement);
+    // form.get("email");
+    const data = {
+      email: formData.get("email"),
+      username: formData.get("username"),
+      dob: `${formData.get("date")}-${formData.get("month")}-${formData.get(
+        "year"
+      )}`,
+      password: formData.get("password"),
+      phone: formData.get("phone"),
+    };
+    console.log(data);
+    
+    handleSendOtp(data.phone);
+    // const res = await registerUser(reqData);
+    // if (res == 0) {
+    //   //show otp
+    // } else if (res == 1) {
+    // }
+  };
   return (
     <div className="min-h-screen bg-[#000000] flex justify-center items-center">
       <div className="w-[90%] md:w-[29%] h-fit bg-[#11112B] rounded-2xl flex items-center justify-center">
-        <form className="relative rounded m-[2rem]">
+        <form
+          className="relative rounded m-[2rem]"
+          id="registerform"
+          onSubmit={handleRegister}
+        >
           <h2 className="text-[1.25rem] mb-1 text-center font-medium text-[#FFFFFF] leading-[30px]">
             Create an account
           </h2>
@@ -20,6 +54,7 @@ const register = () => {
             <input
               type="email"
               id="email"
+              name="email"
               placeholder="Your email"
               className="shadow appearance-none rounded-lg w-full h-[38px] py-2 px-3 mt-1 bg-[#090C23] text-[#9094A6] text-[0.88rem] leading-tight focus:outline-1 focus:shadow-outline"
             />
@@ -31,6 +66,7 @@ const register = () => {
             <input
               type="text"
               id="username"
+              name="username"
               placeholder="Your username"
               className="shadow appearance-none rounded-lg w-full h-[38px] py-2 px-3 mt-1 bg-[#090C23] text-[#9094A6] text-[0.88rem] leading-tight focus:outline-1 focus:shadow-outline"
             />
@@ -42,16 +78,19 @@ const register = () => {
             <div className="flex gap-3">
               <input
                 id="date"
+                name="date"
                 placeholder="DD"
                 className="shadow appearance-none rounded-lg w-full h-[38px] py-2 px-3 mt-1 bg-[#090C23] text-[#9094A6] text-[0.88rem] leading-tight focus:outline-1 focus:shadow-outline"
               />
               <input
                 id="month"
                 placeholder="MM"
+                name="month"
                 className="shadow appearance-none rounded-lg w-full h-[38px] py-2 px-3 mt-1 bg-[#090C23] text-[#9094A6] text-[0.88rem] leading-tight focus:outline-1 focus:shadow-outline"
               />{" "}
               <input
                 id="year"
+                name="year"
                 placeholder="YYYY"
                 className="shadow appearance-none rounded-lg w-full h-[38px] py-2 px-3 mt-1 bg-[#090C23] text-[#9094A6] text-[0.88rem] leading-tight focus:outline-1 focus:shadow-outline"
               />
@@ -64,6 +103,7 @@ const register = () => {
             <input
               type="password"
               id="password"
+              name="password"
               placeholder="password"
               className="shadow appearance-none rounded-lg w-full h-[38px] py-2 px-3 mt-1 bg-[#090C23] text-[#9094A6] text-[0.88rem] leading-tight focus:outline-1 focus:shadow-outline"
             />
@@ -75,11 +115,13 @@ const register = () => {
             <div className="flex gap-2">
               <input
                 id="phonecode"
+                name="phonecode"
                 placeholder="+91"
                 className="shadow appearance-none w-1/3 rounded-lg h-[38px] py-2 px-3 mt-1 bg-[#090C23] text-[#9094A6] text-[0.88rem] leading-tight focus:outline-1 focus:shadow-outline"
               />
               <input
                 id="phone"
+                name="phone"
                 placeholder=""
                 className="shadow appearance-none rounded-lg w-full h-[38px] py-2 px-3 mt-1 bg-[#090C23] text-[#9094A6] text-[0.88rem] leading-tight focus:outline-1 focus:shadow-outline"
               />
