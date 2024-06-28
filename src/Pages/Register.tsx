@@ -17,16 +17,6 @@ const register = () => {
       //Redirecting the user to the Google
       router.push(url);
 
-
-      // Replace the name retrieved from the from Google login page
-      const userNameFromGoogle = "John Doe"; 
-      //Storing the user name in the local Storage
-      localStorage.setItem('userName', userNameFromGoogle);
-
-
-      //Redirecting to the OAuthCallback page
-      router.push('/OAuthCallback');
-
     } catch (error) {
       console.error("Error fetching Google OAuth URL:", error);
     }
