@@ -10,7 +10,7 @@ const api = axios.create({
   baseURL: "http://localhost:8080",
 });
 
-const Otp = () => {
+const Otp = ({ onOtpSent }) => {
   const [otp, setOtp] = useState("");
   const [isOtpSent, setIsOtpSent] = useState(true);
 

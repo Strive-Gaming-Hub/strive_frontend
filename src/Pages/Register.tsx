@@ -2,7 +2,7 @@ import React, { FormEvent } from "react";
 import "../app/globals.css";
 import { IoClose } from "react-icons/io5";
 import { useState } from "react";
-import { handleSendOtp } from "../http/otp";
+import Otp from "../http/otp";
 const register = () => {
   // const [email, setEmail] = useState("");
   // const [username, setUsername] = useState("");
@@ -25,13 +25,15 @@ const register = () => {
       phone: formData.get("phone"),
     };
     console.log(data);
+
     
-    handleSendOtp(data.phone);
-    // const res = await registerUser(reqData);
-    // if (res == 0) {
-    //   //show otp
-    // } else if (res == 1) {
-    // }
+    const res = await registerUser(data);
+    if (res == 0) {
+      //show otp
+      
+    } else if (res == 1) {
+      // handle error
+    }
   };
   return (
     <div className="min-h-screen bg-[#000000] flex justify-center items-center">
