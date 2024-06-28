@@ -1,14 +1,18 @@
 import React from "react";
 import "../app/globals.css";
+import { IoClose } from "react-icons/io5";
 
 const login = () => {
   return (
     <div className="min-h-screen w-[100vw] bg-[#000000] flex justify-center items-center">
       <div className="w-[29%] h-[70%] bg-[#11112B] rounded-2xl flex items-center justify-center">
-        <form className="rounded m-[2rem]">
-          <h2 className="text-[1.25rem] mb-1 text-center font-medium text-[#FFFFFF]">
+        <form className="relative rounded m-[2rem]">
+          <h2 className="text-[1.25rem] mb-1 text-center font-medium text-[#FFFFFF] leading-[30px]">
             Sign in
           </h2>
+          <div className="absolute top-[-1rem] right-[-1rem]">
+            <IoClose className="text-[#8E84A3] font-bold text-lg" />
+          </div>
           <div className="mb-4">
             <label className=" text-[#FFFFFF] text-sm font-medium mb-2">
               Email/username
@@ -45,7 +49,9 @@ const login = () => {
             </button>
           </div>
 
-          <p className="text-gray-100 my-3 w-fit m-auto">or</p>
+          <p className="text-[#3f3f6a] text-[0.8rem] font-medium py-2 w-fit m-auto">
+            OR
+          </p>
 
           <div className="flex items-center justify-between">
             <button
