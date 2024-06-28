@@ -1,7 +1,37 @@
 import React from "react";
 import "../app/globals.css";
+import axios from "axios";
+import { useRouter } from "next/router";
 
 const register = () => {
+  const router = useRouter();
+
+
+
+
+  // Function to handle the Google Registration
+  const handleGoogleRegister = async () => {
+    try {
+      const response = await axios.get("/api/google-auth-url");
+      const { url } = response.data;
+      //Redirecting the user to the Google
+      router.push(url);
+
+
+      // Replace the name retrieved from the from Google login page
+      const userNameFromGoogle = "John Doe"; 
+      //Storing the user name in the local Storage
+      localStorage.setItem('userName', userNameFromGoogle);
+
+
+      //Redirecting to the OAuthCallback page
+      router.push('/OAuthCallback');
+
+    } catch (error) {
+      console.error("Error fetching Google OAuth URL:", error);
+    }
+  };
+
   return (
     <div className="min-h-screen w-[100vw] bg-[#000000] flex justify-center items-center">
       <div className="w-[33%] h-fit bg-[#11112B] rounded-2xl flex items-center justify-center">
@@ -92,10 +122,12 @@ const register = () => {
 
           <p className="text-gray-100 my-3 w-fit m-auto">or</p>
 
+          {/* Google button */}
           <div className="flex items-center justify-between">
             <button
-              type="submit"
-              className="border-2 border-solid  border-[#3e3e6a] text-white font-medium text-[1rem] w-full py-2 px-4 rounded-[0.625rem] "
+              type="button"
+              onClick={handleGoogleRegister}
+              className="border-2 border-solid border-[#3e3e6a] text-white font-medium text-[1rem] w-full py-2 px-4 rounded-[0.625rem]"
             >
               Continue with Google
             </button>
