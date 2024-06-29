@@ -1,8 +1,6 @@
 import type { AppProps } from "next/app";
 import { useRouter } from "next/router";
 import { useState } from "react";
-import Sidebar from "../app/components/Common/SideBAr";
-import NavBar from "../app/components/Common/NavBar";
 import Layout from "../app/components/Common/Layout";
 import { Rubik } from "next/font/google";
 
