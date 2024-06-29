@@ -1,8 +1,31 @@
 import React from "react";
+import axios from "axios";
+import { useRouter } from "next/router";
 import "../app/globals.css";
 
+
 const login = () => {
-  return (
+    const router = useRouter();
+
+
+
+    // Function to handle Google login
+    const handleGoogleLogin = async () => {
+      try {
+        const response = await axios.get("/api/google-auth-url");
+        const { url } = response.data;
+        //Redirecting the user to the Google
+        router.push(url);
+
+        //Redirecting to the OAuthCallback page
+        router.push('/OAuthCallback');
+      } catch (error) {
+        console.error("Error fetching Google OAuth URL:", error);
+      }
+    };
+
+
+    return (  
     <div className="min-h-screen w-[100vw] bg-[#000000] flex justify-center items-center">
       <div className="w-[29%] h-[70%] bg-[#11112B] rounded-2xl flex items-center justify-center">
         <form className="rounded m-[2rem]">
@@ -47,14 +70,20 @@ const login = () => {
 
           <p className="text-gray-100 my-3 w-fit m-auto">or</p>
 
+
+
+          {/* Google button */}
           <div className="flex items-center justify-between">
             <button
               type="submit"
+              onClick={handleGoogleLogin}
               className="border-2 border-solid  border-[#3e3e6a] text-white font-medium text-[1rem] w-full py-2 px-4 rounded-[0.625rem] "
             >
               Continue with Google
             </button>
           </div>
+
+
           <p className=" text-[#8E84A3] mt-4 w-fit m-auto">
             New user?{" "}
             <span className="text-white border-b-2">

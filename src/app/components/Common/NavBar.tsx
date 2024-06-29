@@ -15,7 +15,7 @@ const NavBar: React.FC = () => {
         </div>
 
         {/* Right section */}
-        <div className="flex">
+        <div className="flex pt-1">
           {/* SignIn button */}
           <button className="bg-[#9562FF] text-[#FFFFFF] text-1 px-4 py-2 rounded-xl">
             Sign in
