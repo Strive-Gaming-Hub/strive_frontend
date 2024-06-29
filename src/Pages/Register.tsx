@@ -1,61 +1,48 @@
-import React, { FormEvent } from "react";
+import React, { useState, FormEvent } from "react";
 import "../app/globals.css";
 import { IoClose } from "react-icons/io5";
-import { useState } from "react";
-import Otp from "../http/otp";import axios from "axios";
-import { useRouter } from "next/router";
+// import { handleSendOtp, handleVerifyOtp } from "../Auth/Register";
 
-const register = () => {
-  const router = useRouter();
+const Register: React.FC = () => {
+  const [showOtp, setShowOtp] = useState(false);
+  const [otp, setOtp] = useState("");
+  const [formData, setFormData] = useState({
+    email: "",
+    username: "",
+    date: "",
+    month: "",
+    year: "",
+    password: "",
+    phone: "",
+  });
 
-
-
-
-  // Function to handle the Google Registration
-  const handleGoogleRegister = async () => {
-    try {
-      const response = await axios.get("/api/google-auth-url");
-      const { url } = response.data;
-      //Redirecting the user to the Google
-      router.push(url);
-
-    } catch (error) {
-      console.error("Error fetching Google OAuth URL:", error);
-    }
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
   };
 
-  // const [email, setEmail] = useState("");
-  // const [username, setUsername] = useState("");
-  // const [dob, setDob] = useState("");
-  // const [password, setPassword] = useState("");
-  // const [phone, setPhone] = useState("");
-
-  const handleRegister = (e: any) => {
+  const handleRegister = async (e: FormEvent) => {
     e.preventDefault();
-    const form = document.getElementById("registerform");
-    let formData = new FormData(form as HTMLFormElement);
-    // form.get("email");
-    const data = {
-      email: formData.get("email"),
-      username: formData.get("username"),
-      dob: `${formData.get("date")}-${formData.get("month")}-${formData.get(
-        "year"
-      )}`,
-      password: formData.get("password"),
-      phone: formData.get("phone"),
-    };
-    console.log(data);
 
-    
-    const res = await registerUser(data);
-    if (res == 0) {
-      //show otp
-      
-    } else if (res == 1) {
-      // handle error
-    }
+    const data = {
+      email: formData.email,
+      username: formData.username,
+      dob: `${formData.date}-${formData.month}-${formData.year}`,
+      password: formData.password,
+      phone: formData.phone,
+    };
+    // setShowOtp(true);
+    // const res = await handleSendOtp(data.phone);
+    // if (res === 0) {
+    //   setSentOtp(true);
+    // } else if (res === 1) {
+    //   // handle error
+    // }
   };
-  return (
+
+  return !showOtp ? (
     <div className="min-h-screen bg-[#000000] flex justify-center items-center">
       <div className="w-[90%] md:w-[29%] h-fit bg-[#11112B] rounded-2xl flex items-center justify-center">
         <form
@@ -70,7 +57,7 @@ const register = () => {
             <IoClose className="text-[#8E84A3] font-bold text-lg" />
           </div>
           <div className="mb-1">
-            <label className=" text-[#FFFFFF] text-sm font-medium mb-2">
+            <label className="text-[#FFFFFF] text-sm font-medium mb-2">
               Email
             </label>
             <input
@@ -78,23 +65,27 @@ const register = () => {
               id="email"
               name="email"
               placeholder="Your email"
+              value={formData.email}
+              onChange={handleInputChange}
               className="shadow appearance-none rounded-lg w-full h-[38px] py-2 px-3 mt-1 bg-[#090C23] text-[#9094A6] text-[0.88rem] leading-tight focus:outline-1 focus:shadow-outline"
             />
           </div>
           <div className="mb-1">
-            <label className=" text-[#FFFFFF] text-sm font-medium mb-2">
-              username
+            <label className="text-[#FFFFFF] text-sm font-medium mb-2">
+              Username
             </label>
             <input
               type="text"
               id="username"
               name="username"
               placeholder="Your username"
+              value={formData.username}
+              onChange={handleInputChange}
               className="shadow appearance-none rounded-lg w-full h-[38px] py-2 px-3 mt-1 bg-[#090C23] text-[#9094A6] text-[0.88rem] leading-tight focus:outline-1 focus:shadow-outline"
             />
           </div>
           <div className="mb-1">
-            <label className="  text-[#FFFFFF] text-sm font-medium mb-2">
+            <label className="text-[#FFFFFF] text-sm font-medium mb-2">
               Date of Birth
             </label>
             <div className="flex gap-3">
@@ -102,36 +93,44 @@ const register = () => {
                 id="date"
                 name="date"
                 placeholder="DD"
+                value={formData.date}
+                onChange={handleInputChange}
                 className="shadow appearance-none rounded-lg w-full h-[38px] py-2 px-3 mt-1 bg-[#090C23] text-[#9094A6] text-[0.88rem] leading-tight focus:outline-1 focus:shadow-outline"
               />
               <input
                 id="month"
-                placeholder="MM"
                 name="month"
+                placeholder="MM"
+                value={formData.month}
+                onChange={handleInputChange}
                 className="shadow appearance-none rounded-lg w-full h-[38px] py-2 px-3 mt-1 bg-[#090C23] text-[#9094A6] text-[0.88rem] leading-tight focus:outline-1 focus:shadow-outline"
-              />{" "}
+              />
               <input
                 id="year"
                 name="year"
                 placeholder="YYYY"
+                value={formData.year}
+                onChange={handleInputChange}
                 className="shadow appearance-none rounded-lg w-full h-[38px] py-2 px-3 mt-1 bg-[#090C23] text-[#9094A6] text-[0.88rem] leading-tight focus:outline-1 focus:shadow-outline"
               />
             </div>
           </div>
           <div className="mb-1">
-            <label className=" text-[#FFFFFF] text-sm font-medium mb-2">
-              password
+            <label className="text-[#FFFFFF] text-sm font-medium mb-2">
+              Password
             </label>
             <input
               type="password"
               id="password"
               name="password"
               placeholder="password"
+              value={formData.password}
+              onChange={handleInputChange}
               className="shadow appearance-none rounded-lg w-full h-[38px] py-2 px-3 mt-1 bg-[#090C23] text-[#9094A6] text-[0.88rem] leading-tight focus:outline-1 focus:shadow-outline"
             />
           </div>
           <div className="mb-1">
-            <label className="  text-[#FFFFFF] text-sm font-medium mb-2">
+            <label className="text-[#FFFFFF] text-sm font-medium mb-2">
               Phone
             </label>
             <div className="flex gap-2">
@@ -145,11 +144,13 @@ const register = () => {
                 id="phone"
                 name="phone"
                 placeholder=""
+                value={formData.phone}
+                onChange={handleInputChange}
                 className="shadow appearance-none rounded-lg w-full h-[38px] py-2 px-3 mt-1 bg-[#090C23] text-[#9094A6] text-[0.88rem] leading-tight focus:outline-1 focus:shadow-outline"
               />
             </div>
           </div>
-          <div className="flex items-center justify-between ">
+          <div className="flex items-center justify-between">
             <button
               type="submit"
               className="bg-[#9562FF] border-[#A77CFF] text-white text-[1rem] font-medium w-full py-2 px-5 mt-2 rounded-[0.625rem] focus:outline-none focus:shadow-outline"
@@ -157,16 +158,12 @@ const register = () => {
               Continue
             </button>
           </div>
-
           <p className="text-[#3f3f6a] text-[0.8rem] font-medium py-2 w-fit m-auto">
             OR
           </p>
-
-          {/* Google button */}
           <div className="flex items-center justify-between">
             <button
               type="button"
-              onClick={handleGoogleRegister}
               className="border-2 border-solid border-[#3e3e6a] text-white font-medium text-[1rem] w-full py-2 px-4 rounded-[0.625rem]"
             >
               Continue with Google
@@ -175,7 +172,38 @@ const register = () => {
         </form>
       </div>
     </div>
+  ) : (
+    <div className="min-h-screen bg-[#000000] flex justify-center items-center">
+      <div className="w-[90%] md:w-[29%] h-fit bg-[#11112B] rounded-2xl flex items-center justify-center">
+        <div className="relative rounded m-[2rem]">
+          <h2 className="text-[1.25rem] mb-1 text-center font-medium text-[#FFFFFF] leading-[30px]">
+            Verify OTP
+          </h2>
+          <div className="mb-1">
+            <label className="text-[#FFFFFF] text-sm font-medium mb-2">
+              Enter OTP
+            </label>
+            <input
+              type="text"
+              value={otp}
+              onChange={(e) => setOtp(e.target.value)}
+              placeholder="Enter OTP"
+              className="shadow appearance-none rounded-lg w-full h-[38px] py-2 px-3 mt-1 bg-[#090C23] text-[#9094A6] text-[0.88rem] leading-tight focus:outline-1 focus:shadow-outline"
+            />
+          </div>
+          <div className="flex items-center justify-between">
+            <button
+              type="button"
+              onClick={() => handleVerifyOtp(otp)}
+              className="bg-[#9562FF] border-[#A77CFF] text-white text-[1rem] font-medium w-full py-2 px-5 mt-2 rounded-[0.625rem] focus:outline-none focus:shadow-outline"
+            >
+              Verify OTP
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 };
 
-export default register;
+export default Register;
