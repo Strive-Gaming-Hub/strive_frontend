@@ -1,16 +1,16 @@
 import React, { useState } from "react";
 
 import axios from "axios";
+import { stringify } from "querystring";
 
 const api = axios.create({
   headers: {
-    "Content-type": "application/json",
+    "Content-type": "multipart/form-data",
     Accept: "application/json",
   },
-  baseURL: "http://localhost:8080",
 });
 
-export const handleSendOtp = async ({ phoneNumber: any }) => {
+export const handleSendOtp = async (phoneNumber: string) => {
   // Send OTP to the server
   const res = api
     .post("/api/send-otp", { phoneNumber })
@@ -20,7 +20,7 @@ export const handleSendOtp = async ({ phoneNumber: any }) => {
     });
 };
 
-export const handleVerifyOtp = () => {
+export const handleVerifyOtp = async (otp: string) => {
   // Verify OTP with the server
   const res = api
     .post("/api/verify-otp", { otp })
@@ -33,24 +33,14 @@ export const handleVerifyOtp = () => {
   console.log("OTP verification successful");
 };
 
-// const Otp = () => {
-//   return (
-//     <div>
-//       {isOtpSent ? (
-//         <div>
-//           <input
-//             type="text"
-//             value={otp}
-//             onChange={(e) => setOtp(e.target.value)}
-//             placeholder="Enter OTP"
-//           />
-//           <button onClick={handleVerifyOtp}>Verify OTP</button>
-//         </div>
-//       ) : (
-//         <button onClick={handleSendOtp}>Re-send OTP</button>
-//       )}
-//     </div>
-//   );
-// };
-
-// export default Otp;
+export const registerUser = async (formData: any) => {
+  // Register the user
+  return api
+    .post("/api/v1/auth/register", formData)
+    .then((response) => {
+      return response.data;
+    })
+    .catch((error) => {
+      console.error("Failed to register user:", error);
+    });
+};

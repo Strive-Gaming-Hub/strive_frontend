@@ -1,38 +1,42 @@
 import React, { useState, FormEvent } from "react";
 import "../app/globals.css";
 import { IoClose } from "react-icons/io5";
-// import { handleSendOtp, handleVerifyOtp } from "../Auth/Register";
+import { handleSendOtp, handleVerifyOtp, registerUser } from "../Auth/Register";
 
 const Register: React.FC = () => {
   const [showOtp, setShowOtp] = useState(false);
   const [otp, setOtp] = useState("");
-  const [formData, setFormData] = useState({
-    email: "",
-    username: "",
-    date: "",
-    month: "",
-    year: "",
-    password: "",
-    phone: "",
-  });
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  };
+  // const [formData, setFormData] = useState({
+  //   email: "",
+  //   username: "",
+  //   date: "",
+  //   month: "",
+  //   year: "",
+  //   password: "",
+  //   phone: "",
+  // });
 
   const handleRegister = async (e: FormEvent) => {
     e.preventDefault();
 
-    const data = {
-      email: formData.email,
-      username: formData.username,
-      dob: `${formData.date}-${formData.month}-${formData.year}`,
-      password: formData.password,
-      phone: formData.phone,
-    };
+    const form = document.getElementById("registerform") as HTMLFormElement;
+    const formData = new FormData(form);
+
+    const phone = ((formData.get("phonecode") as string) +
+      formData.get("phone")) as string;
+    const date = `${formData.get("year")}-${formData.get(
+      "month"
+    )}-${formData.get("date")}`;
+    formData.set("phone", phone);
+    formData.set("date", date);
+    formData.delete("year");
+    formData.delete("month");
+    formData.delete("date");
+    formData.delete("phonecode");
+
+    const res = await registerUser(formData);
+    console.log(res);
+
     // setShowOtp(true);
     // const res = await handleSendOtp(data.phone);
     // if (res === 0) {
@@ -65,8 +69,6 @@ const Register: React.FC = () => {
               id="email"
               name="email"
               placeholder="Your email"
-              value={formData.email}
-              onChange={handleInputChange}
               className="shadow appearance-none rounded-lg w-full h-[38px] py-2 px-3 mt-1 bg-[#090C23] text-[#9094A6] text-[0.88rem] leading-tight focus:outline-1 focus:shadow-outline"
             />
           </div>
@@ -79,8 +81,6 @@ const Register: React.FC = () => {
               id="username"
               name="username"
               placeholder="Your username"
-              value={formData.username}
-              onChange={handleInputChange}
               className="shadow appearance-none rounded-lg w-full h-[38px] py-2 px-3 mt-1 bg-[#090C23] text-[#9094A6] text-[0.88rem] leading-tight focus:outline-1 focus:shadow-outline"
             />
           </div>
@@ -93,24 +93,18 @@ const Register: React.FC = () => {
                 id="date"
                 name="date"
                 placeholder="DD"
-                value={formData.date}
-                onChange={handleInputChange}
                 className="shadow appearance-none rounded-lg w-full h-[38px] py-2 px-3 mt-1 bg-[#090C23] text-[#9094A6] text-[0.88rem] leading-tight focus:outline-1 focus:shadow-outline"
               />
               <input
                 id="month"
                 name="month"
                 placeholder="MM"
-                value={formData.month}
-                onChange={handleInputChange}
                 className="shadow appearance-none rounded-lg w-full h-[38px] py-2 px-3 mt-1 bg-[#090C23] text-[#9094A6] text-[0.88rem] leading-tight focus:outline-1 focus:shadow-outline"
               />
               <input
                 id="year"
                 name="year"
                 placeholder="YYYY"
-                value={formData.year}
-                onChange={handleInputChange}
                 className="shadow appearance-none rounded-lg w-full h-[38px] py-2 px-3 mt-1 bg-[#090C23] text-[#9094A6] text-[0.88rem] leading-tight focus:outline-1 focus:shadow-outline"
               />
             </div>
@@ -124,8 +118,6 @@ const Register: React.FC = () => {
               id="password"
               name="password"
               placeholder="password"
-              value={formData.password}
-              onChange={handleInputChange}
               className="shadow appearance-none rounded-lg w-full h-[38px] py-2 px-3 mt-1 bg-[#090C23] text-[#9094A6] text-[0.88rem] leading-tight focus:outline-1 focus:shadow-outline"
             />
           </div>
@@ -144,8 +136,6 @@ const Register: React.FC = () => {
                 id="phone"
                 name="phone"
                 placeholder=""
-                value={formData.phone}
-                onChange={handleInputChange}
                 className="shadow appearance-none rounded-lg w-full h-[38px] py-2 px-3 mt-1 bg-[#090C23] text-[#9094A6] text-[0.88rem] leading-tight focus:outline-1 focus:shadow-outline"
               />
             </div>
