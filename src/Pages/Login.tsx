@@ -2,6 +2,7 @@ import React from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
 import "../app/globals.css";
+import { IoClose } from "react-icons/io5";
 
 
 const login = () => {
@@ -25,13 +26,17 @@ const login = () => {
     };
 
 
-    return (  
-    <div className="min-h-screen w-[100vw] bg-[#000000] flex justify-center items-center">
-      <div className="w-[29%] h-[70%] bg-[#11112B] rounded-2xl flex items-center justify-center">
-        <form className="rounded m-[2rem]">
-          <h2 className="text-[1.25rem] mb-1 text-center font-medium text-[#FFFFFF]">
+
+  return (
+    <div className="min-h-screen bg-[#000000] flex justify-center items-center">
+      <div className="w-[90%] md:w-[29%] h-[70%] bg-[#11112B] rounded-2xl flex items-center justify-center">
+        <form className="relative rounded m-[2rem]">
+          <h2 className="text-[1.25rem] mb-1 text-center font-medium text-[#FFFFFF] leading-[30px]">
             Sign in
           </h2>
+          <div className="absolute top-[-1rem] right-[-1rem]">
+            <IoClose className="text-[#8E84A3] font-bold text-lg" />
+          </div>
           <div className="mb-4">
             <label className=" text-[#FFFFFF] text-sm font-medium mb-2">
               Email/username
@@ -40,7 +45,7 @@ const login = () => {
               type="email"
               id="email"
               placeholder="Enter email"
-              className="shadow appearance-none rounded-lg w-full h-[38px] py-2 px-3 mt-1 bg-[#090C23] text-[#9094A6] leading-tight focus:outline-1 focus:shadow-outline"
+              className="shadow appearance-none rounded-lg w-full h-[38px] py-2 px-3 mt-1 bg-[#090C23] text-[#9094A6] text-[0.88rem] leading-tight focus:outline-1 focus:shadow-outline"
             />
           </div>
           <div className="mb-4">
@@ -51,7 +56,7 @@ const login = () => {
               type="password"
               id="password"
               placeholder="password"
-              className="shadow appearance-none rounded-lg w-full h-[38px] py-2 px-3 mt-1 bg-[#090C23] text-[#9094A6] leading-tight focus:outline-1 focus:shadow-outline"
+              className="shadow appearance-none rounded-lg w-full h-[38px] py-2 px-3 mt-1 bg-[#090C23] text-[#9094A6] text-[0.88rem] leading-tight focus:outline-1 focus:shadow-outline"
             />
           </div>
           <div className="flex items-end justify-end">
@@ -68,7 +73,9 @@ const login = () => {
             </button>
           </div>
 
-          <p className="text-gray-100 my-3 w-fit m-auto">or</p>
+          <p className="text-[#3f3f6a] text-[0.8rem] font-medium py-2 w-fit m-auto">
+            OR
+          </p>
 
 
 
@@ -82,9 +89,9 @@ const login = () => {
               Continue with Google
             </button>
           </div>
+          <p className=" text-[#8E84A3] mt-4 w-fit m-auto text-[0.8rem] font-medium">
 
 
-          <p className=" text-[#8E84A3] mt-4 w-fit m-auto">
             New user?{" "}
             <span className="text-white border-b-2">
               <a href="/register">Create an account</a>
