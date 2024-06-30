@@ -2,19 +2,39 @@ import React, { useState, FormEvent } from "react";
 import "../app/globals.css";
 import { IoClose } from "react-icons/io5";
 import { handleSendOtp, handleVerifyOtp, registerUser } from "../Auth/Register";
+import { redirect } from "next/navigation";
+import { access } from "fs";
 
 const Register: React.FC = () => {
   const [showOtp, setShowOtp] = useState(false);
   const [otp, setOtp] = useState("");
-  // const [formData, setFormData] = useState({
-  //   email: "",
-  //   username: "",
-  //   date: "",
-  //   month: "",
-  //   year: "",
-  //   password: "",
-  //   phone: "",
-  // });
+  const [msg, setMsg] = useState("");
+  const [name, setName] = useState("");
+
+  const handleOTP = async (otp: string) => {
+    if (name != "") {
+      const formdata = new FormData();
+      formdata.append("otp", otp);
+      formdata.append("username", name);
+      const res = await handleVerifyOtp(formdata);
+      if (res.status_code == 200) {
+        setName("");
+
+        const user = {
+          email: res.data.email,
+          phone: res.data.phone,
+          username: res.data.username,
+        };
+        localStorage.setItem("user", JSON.stringify(user));
+        localStorage.setItem("accessToken", res.data.accessToken);
+        localStorage.setItem("refreshToken", res.data.refreshToken);
+        window.location.href = "/";
+        // navigate("/");
+      } else {
+        setMsg("OTP verification failed");
+      }
+    }
+  };
 
   const handleRegister = async (e: FormEvent) => {
     e.preventDefault();
@@ -36,6 +56,16 @@ const Register: React.FC = () => {
 
     const res = await registerUser(formData);
     console.log(res);
+    const name = res.data.username;
+
+    if (res.status_code === 200) {
+      setName(name);
+      setShowOtp(true);
+      setMsg("successfuly registered");
+    } else {
+      // handle error
+      setMsg("failed registration try again");
+    }
 
     // setShowOtp(true);
     // const res = await handleSendOtp(data.phone);
@@ -140,6 +170,7 @@ const Register: React.FC = () => {
               />
             </div>
           </div>
+          <p className="text-sm text-red-700 ">{msg}</p>
           <div className="flex items-center justify-between">
             <button
               type="submit"
@@ -181,10 +212,11 @@ const Register: React.FC = () => {
               className="shadow appearance-none rounded-lg w-full h-[38px] py-2 px-3 mt-1 bg-[#090C23] text-[#9094A6] text-[0.88rem] leading-tight focus:outline-1 focus:shadow-outline"
             />
           </div>
+          <p className="text-sm text-red-700 ">{msg}</p>
           <div className="flex items-center justify-between">
             <button
               type="button"
-              onClick={() => handleVerifyOtp(otp)}
+              onClick={() => handleOTP(otp)}
               className="bg-[#9562FF] border-[#A77CFF] text-white text-[1rem] font-medium w-full py-2 px-5 mt-2 rounded-[0.625rem] focus:outline-none focus:shadow-outline"
             >
               Verify OTP

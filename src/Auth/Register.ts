@@ -2,13 +2,9 @@ import React, { useState } from "react";
 
 import axios from "axios";
 import { stringify } from "querystring";
+import { api } from "./client";
 
-const api = axios.create({
-  headers: {
-    "Content-type": "multipart/form-data",
-    Accept: "application/json",
-  },
-});
+
 
 export const handleSendOtp = async (phoneNumber: string) => {
   // Send OTP to the server
@@ -20,17 +16,17 @@ export const handleSendOtp = async (phoneNumber: string) => {
     });
 };
 
-export const handleVerifyOtp = async (otp: string) => {
+export const handleVerifyOtp = async (formData: any) => {
   // Verify OTP with the server
-  const res = api
-    .post("/api/verify-otp", { otp })
+  return api
+    .post("/api/v1/auth/otp", formData)
     .then((response) => {
       console.log("OTP verification successful");
+      return response.data;
     })
     .catch((error) => {
       console.error("OTP verification failed:", error);
     });
-  console.log("OTP verification successful");
 };
 
 export const registerUser = async (formData: any) => {
