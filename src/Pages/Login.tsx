@@ -3,7 +3,10 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import "../app/globals.css";
 import { IoClose } from "react-icons/io5";
-import { striveLogin } from "@/Auth/Login";
+import {
+  getGoogleLoginUrl,
+  striveLogin,
+} from "@/Auth/Login";
 
 const login = () => {
   const [error, setError] = React.useState<string>("");
@@ -38,19 +41,9 @@ const login = () => {
     }
   };
 
-  // Function to handle Google login
   const handleGoogleLogin = async () => {
-    try {
-      const response = await axios.get("/api/google-auth-url");
-      const { url } = response.data;
-      //Redirecting the user to the Google
-      window.location.href = url;
-
-      //Redirecting to the OAuthCallback page
-      window.location.href = "/OAuthCallback";
-    } catch (error) {
-      console.error("Error fetching Google OAuth URL:", error);
-    }
+    const url = await getGoogleLoginUrl();
+    window.location.href = url;
   };
 
   return (
@@ -111,22 +104,21 @@ const login = () => {
           </p>
 
           {/* Google button */}
-          <div className="flex items-center justify-between">
-            <button
-              type="submit"
-              onClick={handleGoogleLogin}
-              className="border-2 border-solid  border-[#3e3e6a] text-white font-medium text-[1rem] w-full py-2 px-4 rounded-[0.625rem] "
-            >
-              Continue with Google
-            </button>
-          </div>
-          <p className=" text-[#8E84A3] mt-4 w-fit m-auto text-[0.8rem] font-medium">
-            New user?{" "}
-            <span className="text-white border-b-2">
-              <a href="/register">Create an account</a>
-            </span>
-          </p>
         </form>
+        <div className="flex items-center justify-between">
+          <button
+            onClick={handleGoogleLogin}
+            className="border-2 border-solid  border-[#3e3e6a] text-white font-medium text-[1rem] w-full py-2 px-4 rounded-[0.625rem] "
+          >
+            Continue with Google
+          </button>
+        </div>
+        <p className=" text-[#8E84A3] mt-4 w-fit m-auto text-[0.8rem] font-medium">
+          New user?{" "}
+          <span className="text-white border-b-2">
+            <a href="/register">Create an account</a>
+          </span>
+        </p>
       </div>
     </div>
   );

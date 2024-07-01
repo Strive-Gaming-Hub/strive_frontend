@@ -4,7 +4,7 @@ const nextConfig = {
     return [
       {
         source: "/api/:path*",
-        destination: "https://fancy-adequately-fish.ngrok-free.app//api/:path*",
+        destination: "http://192.168.123.22:8080/api/:path*",
       },
     ];
   },

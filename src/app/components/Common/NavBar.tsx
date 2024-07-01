@@ -1,5 +1,5 @@
-import React from 'react';
-import Link from 'next/link';
+import React from "react";
+import Link from "next/link";
 
 const NavBar: React.FC = () => {
   return (
@@ -9,7 +9,9 @@ const NavBar: React.FC = () => {
         <div className="flex items-center">
           <div className="flex-shrink-0">
             <Link href="/">
-              <span className="text-white text-xl font-bold cursor-pointer">Logo</span>
+              <span className="text-white text-xl font-bold cursor-pointer">
+                Logo
+              </span>
             </Link>
           </div>
         </div>
@@ -17,9 +19,11 @@ const NavBar: React.FC = () => {
         {/* Right section */}
         <div className="flex pt-1">
           {/* SignIn button */}
-          <button className="bg-[#9562FF] text-[#FFFFFF] text-1 px-4 py-2 rounded-xl">
-            Sign in
-          </button>
+          <a href="/login">
+            <button className="bg-[#9562FF] text-[#FFFFFF] text-1 px-4 py-2 rounded-xl">
+              Sign in
+            </button>
+          </a>
         </div>
       </div>
     </nav>
