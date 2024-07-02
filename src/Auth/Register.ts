@@ -31,12 +31,19 @@ export const handleVerifyOtp = async (formData: any) => {
 export const registerUser = async (formData: any) => {
   // Register the user
   return api
-    .post("/api/v1/auth/register", formData)
+    .put("/api/v1/auth/user", formData)
     .then((response) => {
       return response.data;
     })
     .catch((error) => {
-      console.error("Failed to register user:", error);
+      console.error(
+        "Failed to register user:",
+        error,
+        "error to register user "
+      );
+      console.log(
+        "error to register user through api, wait for some time and try again"
+      );
       return error.response.data;
     });
 };
@@ -49,5 +56,6 @@ export const getGoogleRegisterUrl = async () => {
     return url;
   } catch (error) {
     console.error("Error fetching Google OAuth URL:", error);
+    console.log("error fetching google url, wait for some time and try again");
   }
 };
