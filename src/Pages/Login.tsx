@@ -2,14 +2,11 @@ import React from "react";
 import "../app/globals.css";
 import { IoClose } from "react-icons/io5";
 import { getGoogleLoginUrl, striveLogin } from "@/Auth/Login";
-import Loader from "../app/components/common/Loader"; 
 
-
-
-
-const Login = ({setLoader = (t:boolean)=>{}}) => {
+const Login = ({ setLoader = (t: boolean) => {} }) => {
   const [error, setError] = React.useState<string>("");
-  const [googleLoginMessage, setGoogleLoginMessage] = React.useState<string>("");
+  const [googleLoginMessage, setGoogleLoginMessage] =
+    React.useState<string>("");
   const [loading, setLoading] = React.useState<boolean>(false);
 
   const handleLogin = async (e: React.FormEvent) => {
@@ -73,14 +70,16 @@ const Login = ({setLoader = (t:boolean)=>{}}) => {
     }
   };
 
-
   return (
     <div className="min-h-screen bg-[#000000] flex justify-center items-center">
       {/* Loader component conditionally rendered based on loading state */}
-      {loading && <Loader />}
 
       <div className="w-[90%] md:w-[29%] bg-[#11112B] rounded-2xl flex flex-col items-center justify-center p-4">
-        <form className="w-full relative rounded" id="login" onSubmit={handleLogin}>
+        <form
+          className="w-full relative rounded"
+          id="login"
+          onSubmit={handleLogin}
+        >
           <h2 className="text-[1.25rem] mb-1 text-center font-medium text-[#FFFFFF] leading-[30px]">
             Sign in
           </h2>
@@ -88,7 +87,9 @@ const Login = ({setLoader = (t:boolean)=>{}}) => {
             <IoClose className="text-[#8E84A3] font-bold text-lg hover:scale-125 hover:cursor-pointer" />
           </div>
           <div className="mb-4">
-            <label className="text-[#FFFFFF] text-sm font-medium mb-2">Email/username</label>
+            <label className="text-[#FFFFFF] text-sm font-medium mb-2">
+              Email/username
+            </label>
             <input
               type="text"
               name="credential"
@@ -98,7 +99,9 @@ const Login = ({setLoader = (t:boolean)=>{}}) => {
             />
           </div>
           <div className="mb-4">
-            <label className="text-[#FFFFFF] text-sm font-medium mb-2">Password</label>
+            <label className="text-[#FFFFFF] text-sm font-medium mb-2">
+              Password
+            </label>
             <input
               type="password"
               name="password"
@@ -121,7 +124,9 @@ const Login = ({setLoader = (t:boolean)=>{}}) => {
               {loading ? "Logging in..." : "Continue"}
             </button>
           </div>
-          <p className="text-[#3f3f6a] text-[0.8rem] font-medium py-2 w-fit m-auto">OR</p>
+          <p className="text-[#3f3f6a] text-[0.8rem] font-medium py-2 w-fit m-auto">
+            OR
+          </p>
         </form>
         <div className="w-full flex items-center justify-between">
           <button

@@ -16,6 +16,9 @@ export const handleSendOtp = async (phoneNumber: string) => {
 
 export const handleVerifyOtp = async (formData: any) => {
   // Verify OTP with the server
+
+  // return api.post("/api/verify-otp", formData);
+
   return api
     .post("/api/v1/auth/otp", formData)
     .then((response) => {
@@ -24,6 +27,7 @@ export const handleVerifyOtp = async (formData: any) => {
     })
     .catch((error) => {
       console.error("OTP verification failed:", error);
+      console.log("OTP verification failed, wait for some time and try again");
       return error.response.data;
     });
 };
