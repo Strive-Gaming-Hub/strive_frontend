@@ -41,5 +41,6 @@ export const getGoogleLoginUrl = async () => {
     return url;
   } catch (error) {
     console.error("Error fetching Google OAuth URL:", error);
+    console.log("error fetching google url, wait for some time and try again");
   }
 };

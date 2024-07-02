@@ -11,6 +11,7 @@ const Register: React.FC = () => {
   const [otp, setOtp] = useState("");
   const [msg, setMsg] = useState("");
   const [name, setName] = useState("");
+  const [pop, setPop] = useState(true);
 
   const handleOTP = async (otp: string) => {
     if (name != "") {
@@ -40,11 +41,59 @@ const Register: React.FC = () => {
     const form = document.getElementById("registerform") as HTMLFormElement;
     const formData = new FormData(form);
 
+    const day = parseInt(formData.get("date") as string, 10);
+    const month = parseInt(formData.get("month") as string, 10);
+    const year = parseInt(formData.get("year") as string, 10);
+
+    console.log(day, month, year);
+
+    if (isNaN(day) || isNaN(month) || isNaN(year)) {
+      setMsg("Please enter a valid date of birth");
+      console.error("Invalid date of birth");
+      return;
+    }
+
+    const currentYear = new Date().getFullYear();
+    const currentMonth = new Date().getMonth() + 1; // getMonth() returns 0-11
+    const currentDay = new Date().getDate();
+
+    if (day < 1 || day > 31) {
+      setMsg("Day must be between 1 and 31");
+      console.error("Day must be between 1 and 31");
+      return;
+    }
+
+    if (month < 1 || month > 12) {
+      setMsg("Month must be between 1 and 12");
+      console.error("Month must be between 1 and 12");
+      return;
+    }
+
+    if (year > currentYear - 18 || year < 1900) {
+      // Assuming reasonable range for DOB year
+      setMsg(`Year must be between 1900 and ${currentYear}`);
+      console.error(`Year must be between 1900 and ${currentYear - 18}`);
+      return;
+    }
+
+    // Age calculation
+    let age = currentYear - year;
+    if (currentMonth < month || (currentMonth === month && currentDay < day)) {
+      age--;
+    }
+
+    if (age < 18) {
+      setMsg("You must be at least 18 years old to register");
+      console.error("User is below 18 years old");
+      return;
+    }
+
     const phone = ((formData.get("phonecode") as string) +
       formData.get("phone")) as string;
     const date = `${formData.get("year")}-${formData.get(
       "month"
     )}-${formData.get("date")}`;
+    console.log(date);
     formData.set("phone", phone);
     formData.set("date", date);
     formData.delete("year");
@@ -54,14 +103,20 @@ const Register: React.FC = () => {
 
     const res = await registerUser(formData);
     console.log(res);
-    const name = res.data.username;
+
+    console.log(res.data);
+    // console.log(res.data.username);
 
     if (res.status_code === 200) {
+      const name = res.data.username;
       setName(name);
       setShowOtp(true);
       setMsg("successfuly registered");
     } else {
       setMsg(res.message);
+      console.log(
+        "not getting response from backend, we are trying our best... try again later"
+      );
     }
 
     // setShowOtp(true);
@@ -75,6 +130,9 @@ const Register: React.FC = () => {
 
   const handleGoogleRegister = async () => {
     const url = await getGoogleRegisterUrl();
+    if (!url) {
+      return;
+    }
     window.location.href = url;
   };
 
@@ -90,7 +148,10 @@ const Register: React.FC = () => {
             Create an account
           </h2>
           <div className="absolute top-[-1rem] right-[-1rem]">
-            <IoClose className="text-[#8E84A3] font-bold text-lg hover:scale-x-125" />
+            <IoClose
+              onClick={() => setPop(!pop)}
+              className="text-[#8E84A3] font-bold text-lg hover:scale-x-125 cursor-pointer"
+            />
           </div>
           <div className="mb-1">
             <label className="text-[#FFFFFF] text-sm font-medium mb-2">
@@ -101,6 +162,7 @@ const Register: React.FC = () => {
               id="email"
               name="email"
               placeholder="Your email"
+              required
               className="shadow appearance-none rounded-lg w-full h-[38px] py-2 px-3 mt-1 bg-[#090C23] text-[#9094A6] text-[0.88rem] leading-tight focus:outline-1 focus:shadow-outline"
             />
           </div>
@@ -113,6 +175,8 @@ const Register: React.FC = () => {
               id="username"
               name="username"
               placeholder="Your username"
+              required
+              minLength={5}
               className="shadow appearance-none rounded-lg w-full h-[38px] py-2 px-3 mt-1 bg-[#090C23] text-[#9094A6] text-[0.88rem] leading-tight focus:outline-1 focus:shadow-outline"
             />
           </div>
@@ -122,21 +186,27 @@ const Register: React.FC = () => {
             </label>
             <div className="flex gap-3">
               <input
-                id="date"
+                inputMode="numeric"
                 name="date"
                 placeholder="DD"
+                required
+                //min and max date min 01 and max 31
                 className="shadow appearance-none rounded-lg w-full h-[38px] py-2 px-3 mt-1 bg-[#090C23] text-[#9094A6] text-[0.88rem] leading-tight focus:outline-1 focus:shadow-outline"
               />
               <input
-                id="month"
+                inputMode="numeric"
                 name="month"
                 placeholder="MM"
+                required
+                //not working min and max month please solve it
+
                 className="shadow appearance-none rounded-lg w-full h-[38px] py-2 px-3 mt-1 bg-[#090C23] text-[#9094A6] text-[0.88rem] leading-tight focus:outline-1 focus:shadow-outline"
               />
               <input
-                id="year"
+                inputMode="numeric"
                 name="year"
                 placeholder="YYYY"
+                required
                 className="shadow appearance-none rounded-lg w-full h-[38px] py-2 px-3 mt-1 bg-[#090C23] text-[#9094A6] text-[0.88rem] leading-tight focus:outline-1 focus:shadow-outline"
               />
             </div>
@@ -150,6 +220,9 @@ const Register: React.FC = () => {
               id="password"
               name="password"
               placeholder="password"
+              required
+              //min length 8 and character includinng special character
+              pattern="^(?=.*\d)(?=.*[!@#$%^&*]).{8,}$"
               className="shadow appearance-none rounded-lg w-full h-[38px] py-2 px-3 mt-1 bg-[#090C23] text-[#9094A6] text-[0.88rem] leading-tight focus:outline-1 focus:shadow-outline"
             />
           </div>
@@ -159,15 +232,21 @@ const Register: React.FC = () => {
             </label>
             <div className="flex gap-2">
               <input
-                id="phonecode"
                 name="phonecode"
                 placeholder="+91"
+                required
+                //by default value +91 but user can change it
+                defaultValue="+91"
                 className="shadow appearance-none w-1/3 rounded-lg h-[38px] py-2 px-3 mt-1 bg-[#090C23] text-[#9094A6] text-[0.88rem] leading-tight focus:outline-1 focus:shadow-outline"
               />
               <input
-                id="phone"
+                //remove the indicator from input field
+                inputMode="numeric"
                 name="phone"
                 placeholder=""
+                required
+                minLength={10}
+                maxLength={10}
                 className="shadow appearance-none rounded-lg w-full h-[38px] py-2 px-3 mt-1 bg-[#090C23] text-[#9094A6] text-[0.88rem] leading-tight focus:outline-1 focus:shadow-outline"
               />
             </div>
@@ -208,7 +287,8 @@ const Register: React.FC = () => {
               Enter OTP
             </label>
             <input
-              type="text"
+              inputMode="numeric"
+              minLength={6}
               value={otp}
               onChange={(e) => setOtp(e.target.value)}
               placeholder="Enter OTP"
