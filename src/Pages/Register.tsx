@@ -1,40 +1,51 @@
-import React, { useState, FormEvent } from "react";
+import React, { useState, FormEvent, useEffect } from "react";
 import "../app/globals.css";
 import { IoClose } from "react-icons/io5";
 import { handleSendOtp, handleVerifyOtp, registerUser } from "../Auth/Register";
 import { getGoogleRegisterUrl } from "../Auth/Register";
 
-const Register: React.FC = () => {
+const Register = ({ setLoader = (t: boolean) => {} }) => {
   const [showOtp, setShowOtp] = useState(false);
   const [otp, setOtp] = useState("");
   const [msg, setMsg] = useState("");
   const [name, setName] = useState("");
   const [pop, setPop] = useState(true);
+  {
+  }
 
   const handleOTP = async (otp: string) => {
+    setLoader(true);
     if (name != "") {
       const formdata = new FormData();
       formdata.append("otp", otp);
       formdata.append("username", name);
       const res = await handleVerifyOtp(formdata);
+      console.log("response body of verify otp", res);
 
-      const user = {
-        email: res.data.email,
-        phone: res.data.phone,
-        username: res.data.username,
-      };
-      localStorage.setItem("user", JSON.stringify(user));
-      localStorage.setItem("accessToken", res.data.accessToken);
-      localStorage.setItem("refreshToken", res.data.refreshToken);
-      window.location.href = "/";
-      // navigate("/");
-    } else {
-      setMsg("OTP verification failed");
+      if (res.status_code == 200) {
+        const user = {
+          email: res.data.email,
+          phone: res.data.phone,
+          username: res.data.username,
+        };
+
+        localStorage.setItem("user", JSON.stringify(user));
+        localStorage.setItem("accessToken", res.data.accessToken);
+        localStorage.setItem("refreshToken", res.data.refreshToken);
+
+        // navigate("/");
+        window.location.href = "/";
+      } else {
+        setMsg("OTP verification failed");
+        console.log("OTP verification failed");
+      }
     }
+    setLoader(false);
   };
 
   const handleRegister = async (e: FormEvent) => {
     e.preventDefault();
+    setLoader(true);
 
     const form = document.getElementById("registerform") as HTMLFormElement;
     const formData = new FormData(form);
@@ -110,8 +121,10 @@ const Register: React.FC = () => {
       setName(name);
       setShowOtp(true);
       setMsg("successfuly registered");
+      setLoader(false);
     } else {
       setMsg(res.message);
+      setLoader(false);
       console.log(
         "not getting response from backend, we are trying our best... try again later"
       );
@@ -127,12 +140,20 @@ const Register: React.FC = () => {
   };
 
   const handleGoogleRegister = async () => {
+    setLoader(true);
     const url = await getGoogleRegisterUrl();
     if (!url) {
       return;
     }
     window.location.href = url;
   };
+
+  useEffect(() => {
+    setLoader(false);
+    return () => {
+      setLoader(true);
+    };
+  }, []);
 
   return !showOtp ? (
     <div className="min-h-screen bg-[#000000] flex justify-center items-center">
