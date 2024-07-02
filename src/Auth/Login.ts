@@ -44,3 +44,28 @@ export const getGoogleLoginUrl = async () => {
     console.log("error fetching google url, wait for some time and try again");
   }
 };
+
+export const handleOAuthCallback = async (code: string) => {
+  if (code) {
+    try {
+      //   Sends the code URL query to the backend server
+      const response = await axios.get("/api/v1/auth/exchange?code=" + code);
+
+      console.log(response.data);
+
+      // Extract tokens from the response
+      const { access_token, refresh_token } = response.data.data;
+      // console.log(access_token, refresh_token);
+      // Store the extracted tokens in cookies
+      Cookies.set("accessToken", access_token);
+      Cookies.set("refreshToken", refresh_token);
+
+      // Redirect to the user data form page
+      return true;
+    } catch (error) {
+      console.error("Error exchanging code:", error);
+      return false;
+      // display error message to users
+    }
+  }
+};

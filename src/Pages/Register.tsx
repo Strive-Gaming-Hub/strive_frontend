@@ -2,8 +2,6 @@ import React, { useState, FormEvent } from "react";
 import "../app/globals.css";
 import { IoClose } from "react-icons/io5";
 import { handleSendOtp, handleVerifyOtp, registerUser } from "../Auth/Register";
-import { redirect } from "next/navigation";
-import { access } from "fs";
 import { getGoogleRegisterUrl } from "../Auth/Register";
 
 const Register: React.FC = () => {
