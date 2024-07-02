@@ -19,11 +19,13 @@ const Login = ({setLoader = (t:boolean)=>{}}) => {
 
     const credential = formData.get("credential") as string;
     const password = formData.get("password") as string;
+    
 
     if (password.length < 8) {
       setError("Password must be at least 8 characters");
       return;
     }
+    
 
     formData.delete("credential");
     if (credential.includes("@")) {
@@ -31,6 +33,10 @@ const Login = ({setLoader = (t:boolean)=>{}}) => {
     } else if (credential.match(/^[0-9]+$/)) {
       formData.set("phone", credential);
     } else {
+      if (credential.length <= 3) {
+        setError("Username must be greater than 3 characters");
+        return;
+      }
       formData.set("username", credential);
     }
 
