@@ -34,12 +34,13 @@ export const striveLogin = async (formData: FormData) => {
 
 // Function to handle Google login
 export const getGoogleLoginUrl = async () => {
-  try {
-    const response = await axios.get("/api/v1/auth/getGoogleAuthUrl");
-    const { url } = response.data.data;
-    //Redirecting the user to the Google
-    return url;
-  } catch (error) {
-    console.error("Error fetching Google OAuth URL:", error);
-  }
+  return api
+  .get("/api/v1/auth/googleAuthUrl")
+  .then((response) => {
+    console.log("fetch successful");
+    return response.data;
+  })
+  .catch((error) => {
+    return error.response.data;
+  });
 };
