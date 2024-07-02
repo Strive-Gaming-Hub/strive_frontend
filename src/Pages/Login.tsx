@@ -3,10 +3,7 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import "../app/globals.css";
 import { IoClose } from "react-icons/io5";
-import {
-  getGoogleLoginUrl,
-  striveLogin,
-} from "@/Auth/Login";
+import { getGoogleLoginUrl, striveLogin } from "@/Auth/Login";
 
 const login = () => {
   const [error, setError] = React.useState<string>("");
@@ -48,20 +45,20 @@ const login = () => {
 
   return (
     <div className="min-h-screen bg-[#000000] flex justify-center items-center">
-      <div className="w-[90%] md:w-[29%] h-[70%] bg-[#11112B] rounded-2xl flex items-center justify-center">
+      <div className="w-[90%] md:w-[29%] bg-[#11112B] rounded-2xl flex flex-col items-center justify-center p-4">
         <form
-          className="relative rounded m-[2rem]"
+          className="w-full relative rounded"
           id="login"
           onSubmit={handleLogin}
         >
           <h2 className="text-[1.25rem] mb-1 text-center font-medium text-[#FFFFFF] leading-[30px]">
             Sign in
           </h2>
-          <div className="absolute top-[-1rem] right-[-1rem]">
-            <IoClose className="text-[#8E84A3] font-bold text-lg" />
+          <div className="absolute top-[0.5rem] right-[0.5rem]">
+            <IoClose className="text-[#8E84A3] font-bold text-lg hover:scale-125 hover:cursor-" />
           </div>
           <div className="mb-4">
-            <label className=" text-[#FFFFFF] text-sm font-medium mb-2">
+            <label className="text-[#FFFFFF] text-sm font-medium mb-2">
               Email/username
             </label>
             <input
@@ -73,13 +70,13 @@ const login = () => {
             />
           </div>
           <div className="mb-4">
-            <label className=" text-[#FFFFFF] text-sm font-medium mb-2">
-              password
+            <label className="text-[#FFFFFF] text-sm font-medium mb-2">
+              Password
             </label>
             <input
               type="password"
               name="password"
-              placeholder="password"
+              placeholder="Enter password"
               required={true}
               className="shadow appearance-none rounded-lg w-full h-[38px] py-2 px-3 mt-1 bg-[#090C23] text-[#9094A6] text-[0.88rem] leading-tight focus:outline-1 focus:shadow-outline"
             />
@@ -98,22 +95,19 @@ const login = () => {
               Continue
             </button>
           </div>
-
           <p className="text-[#3f3f6a] text-[0.8rem] font-medium py-2 w-fit m-auto">
             OR
           </p>
-
-          {/* Google button */}
         </form>
-        <div className="flex items-center justify-between">
+        <div className="w-full flex items-center justify-between ">
           <button
             onClick={handleGoogleLogin}
-            className="border-2 border-solid  border-[#3e3e6a] text-white font-medium text-[1rem] w-full py-2 px-4 rounded-[0.625rem] "
+            className="border-2 border-solid border-[#3e3e6a] text-white font-medium text-[1rem] w-full py-2 px-4 rounded-[0.625rem]"
           >
             Continue with Google
           </button>
         </div>
-        <p className=" text-[#8E84A3] mt-4 w-fit m-auto text-[0.8rem] font-medium">
+        <p className="text-[#8E84A3] mt-4 w-fit m-auto text-[0.8rem] font-medium">
           New user?{" "}
           <span className="text-white border-b-2">
             <a href="/register">Create an account</a>

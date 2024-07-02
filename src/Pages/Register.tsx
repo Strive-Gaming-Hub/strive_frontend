@@ -4,6 +4,7 @@ import { IoClose } from "react-icons/io5";
 import { handleSendOtp, handleVerifyOtp, registerUser } from "../Auth/Register";
 import { redirect } from "next/navigation";
 import { access } from "fs";
+import { getGoogleRegisterUrl } from "../Auth/Register";
 
 const Register: React.FC = () => {
   const [showOtp, setShowOtp] = useState(false);
@@ -17,22 +18,19 @@ const Register: React.FC = () => {
       formdata.append("otp", otp);
       formdata.append("username", name);
       const res = await handleVerifyOtp(formdata);
-      if (res.status_code == 200) {
-        setName("");
 
-        const user = {
-          email: res.data.email,
-          phone: res.data.phone,
-          username: res.data.username,
-        };
-        localStorage.setItem("user", JSON.stringify(user));
-        localStorage.setItem("accessToken", res.data.accessToken);
-        localStorage.setItem("refreshToken", res.data.refreshToken);
-        window.location.href = "/";
-        // navigate("/");
-      } else {
-        setMsg("OTP verification failed");
-      }
+      const user = {
+        email: res.data.email,
+        phone: res.data.phone,
+        username: res.data.username,
+      };
+      localStorage.setItem("user", JSON.stringify(user));
+      localStorage.setItem("accessToken", res.data.accessToken);
+      localStorage.setItem("refreshToken", res.data.refreshToken);
+      window.location.href = "/";
+      // navigate("/");
+    } else {
+      setMsg("OTP verification failed");
     }
   };
 
@@ -63,8 +61,7 @@ const Register: React.FC = () => {
       setShowOtp(true);
       setMsg("successfuly registered");
     } else {
-      // handle error
-      setMsg("failed registration try again");
+      setMsg(res.message);
     }
 
     // setShowOtp(true);
@@ -74,6 +71,11 @@ const Register: React.FC = () => {
     // } else if (res === 1) {
     //   // handle error
     // }
+  };
+
+  const handleGoogleRegister = async () => {
+    const url = await getGoogleRegisterUrl();
+    window.location.href = url;
   };
 
   return !showOtp ? (
@@ -88,7 +90,7 @@ const Register: React.FC = () => {
             Create an account
           </h2>
           <div className="absolute top-[-1rem] right-[-1rem]">
-            <IoClose className="text-[#8E84A3] font-bold text-lg" />
+            <IoClose className="text-[#8E84A3] font-bold text-lg hover:scale-x-125" />
           </div>
           <div className="mb-1">
             <label className="text-[#FFFFFF] text-sm font-medium mb-2">
@@ -185,6 +187,7 @@ const Register: React.FC = () => {
           <div className="flex items-center justify-between">
             <button
               type="button"
+              onClick={handleGoogleRegister}
               className="border-2 border-solid border-[#3e3e6a] text-white font-medium text-[1rem] w-full py-2 px-4 rounded-[0.625rem]"
             >
               Continue with Google

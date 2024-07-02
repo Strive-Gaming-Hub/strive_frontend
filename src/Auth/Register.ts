@@ -4,8 +4,6 @@ import axios from "axios";
 import { stringify } from "querystring";
 import { api } from "./client";
 
-
-
 export const handleSendOtp = async (phoneNumber: string) => {
   // Send OTP to the server
   const res = api
@@ -26,6 +24,7 @@ export const handleVerifyOtp = async (formData: any) => {
     })
     .catch((error) => {
       console.error("OTP verification failed:", error);
+      return error.response.data;
     });
 };
 
@@ -38,5 +37,17 @@ export const registerUser = async (formData: any) => {
     })
     .catch((error) => {
       console.error("Failed to register user:", error);
+      return error.response.data;
     });
+};
+
+export const getGoogleRegisterUrl = async () => {
+  try {
+    const response = await axios.get("/api/v1/auth/getGoogleAuthUrl");
+    const { url } = response.data.data;
+    //Redirecting the user to the Google
+    return url;
+  } catch (error) {
+    console.error("Error fetching Google OAuth URL:", error);
+  }
 };
