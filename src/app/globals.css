@@ -5,3 +5,9 @@
 .rubik {
   font-family: var(--font-rubik);
 }
+
+:root {
+  --toastify-color-dark: #1c1c3a;
+  --toastify-font-family: var(--font-rubik);
+  --toastify-toast-max-height: 71px;
+}
