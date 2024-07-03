@@ -5,7 +5,7 @@ import Layout from "../app/components/Common/Layout";
 import { Rubik } from "next/font/google";
 
 import "../app/globals.css";
-import Loader from "@/app/components/common/Loader";
+import Loader from "@/app/components/Common/Loader";
 import { AuthProvider } from "@/app/Context/AuthContext";
 
 const rubik = Rubik({
@@ -29,7 +29,7 @@ export default function App({ Component, pageProps }: AppProps) {
       <div className={`min-h-screen w-full font-rubik ${rubik.variable}`}>
         {shouldRenderSidebar && <Layout />}
         {loader && <Loader />}
-        <Component {...pageProps} setLoader={setLoader} />
+        <Component {...pageProps}  setLoader={setLoader} />
       </div>
     </AuthProvider>
   );

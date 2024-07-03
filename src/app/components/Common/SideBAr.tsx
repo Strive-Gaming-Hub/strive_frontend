@@ -1,9 +1,20 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import { RiArrowRightSLine, RiArrowLeftSLine} from "react-icons/ri";
+import { RiArrowRightSLine, RiArrowLeftSLine } from "react-icons/ri";
+import { useAuth } from "@/app/Context/AuthContext";
 
 const Sidebar = () => {
   const [isDropdownOpen, setDropdownOpen] = useState(false);
+  const { isAuthenticated, logout } = useAuth();
+  const [username, setUsername] = useState("");
+
+  useEffect(() => {
+    // Fetch user data from backend or localStorage
+    const user = JSON.parse(localStorage.getItem("user") || "{}");
+    if (user && user.username) {
+      setUsername(user.username);
+    }
+  }, []);
 
   const toggleDropdown = () => {
     setDropdownOpen(!isDropdownOpen);
@@ -20,7 +31,7 @@ const Sidebar = () => {
         <div className="h-10 rounded-lg w-10 bg-gray-300 mr-2"></div>
         {/* Hello message */}
         <div className="flex flex-col">
-          <h2 className="text-lg font-semibold">iGaurav17</h2>
+          <h2 className="text-lg font-semibold">{username || "New User"}</h2>
         </div>
         {/* Arrow Icon */}
         <div className="ml-auto">
@@ -28,16 +39,21 @@ const Sidebar = () => {
         </div>
       </div>
 
-
       {/* Dropdown content */}
       {isDropdownOpen && (
         <div className="absolute left-full top-1 bg-[#11112B] m-2 rounded-md w-40">
           <ul className="p-1">
-          <li className="px-2 py-2 cursor-pointer text-[#FFFFFF] text-1 hover:bg-[#1F1943] hover:text-[#FFFFFF] rounded-[4px]">
+            <li className="px-2 py-2 cursor-pointer text-[#FFFFFF] text-1 hover:bg-[#1F1943] hover:text-[#FFFFFF] rounded-[4px]">
+              <Link href="/profile">
+                <span>Profile</span>
+              </Link>
+            </li>
+            <li className="px-2 py-2 cursor-pointer text-[#FFFFFF] text-1 hover:bg-[#1F1943] hover:text-[#FFFFFF] rounded-[4px]">
               <Link href="/profile">
                 <span>Wallet</span>
               </Link>
             </li>
+
             <li className="px-2 py-2 cursor-pointer text-[#FFFFFF] text-[16px] hover:bg-[#1F1943] hover:text-[#FFFFFF] rounded-[4px]">
               <Link href="/profile">
                 <span>Statistics</span>
@@ -61,8 +77,6 @@ const Sidebar = () => {
           </ul>
         </div>
       )}
-
-
 
       {/* Menu Options */}
       <ul className="py-2">
