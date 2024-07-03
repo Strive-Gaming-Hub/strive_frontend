@@ -8,6 +8,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 import "../app/globals.css";
 import Loader from "@/app/components/common/Loader";
+import { AuthProvider } from "@/app/Context/AuthContext";
 
 const rubik = Rubik({
   subsets: ["latin"],
@@ -26,7 +27,8 @@ export default function App({ Component, pageProps }: AppProps) {
   const toggleSidebar = () => setSidebarOpen(!isSidebarOpen);
 
   return (
-    <div className={`min-h-screen w-full font-rubik ${rubik.variable}`}>
+    <AuthProvider>
+      <div className={`min-h-screen w-full font-rubik ${rubik.variable}`}>
       {shouldRenderSidebar && (
         <Layout>
           {loader && <Loader />}
@@ -41,5 +43,6 @@ export default function App({ Component, pageProps }: AppProps) {
         </Layout>
       )}
     </div>
+    </AuthProvider>
   );
 }
