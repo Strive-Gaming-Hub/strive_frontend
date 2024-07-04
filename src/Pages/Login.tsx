@@ -2,6 +2,7 @@ import React from "react";
 import "../app/globals.css";
 import { IoClose } from "react-icons/io5";
 import { getGoogleLoginUrl, striveLogin } from "@/Auth/Login";
+import { showToast } from "@/app/notifier/toast";
 
 const Login = ({ setLoader = (t: boolean) => {} }) => {
   const [error, setError] = React.useState<string>("");
@@ -16,13 +17,11 @@ const Login = ({ setLoader = (t: boolean) => {} }) => {
 
     const credential = formData.get("credential") as string;
     const password = formData.get("password") as string;
-    
 
     if (password.length < 8) {
       setError("Password must be at least 8 characters");
       return;
     }
-    
 
     formData.delete("credential");
     if (credential.includes("@")) {
@@ -48,6 +47,7 @@ const Login = ({ setLoader = (t: boolean) => {} }) => {
         window.location.href = "/";
       } else {
         setError(res.message);
+        showToast("invalid credential,  try again!!", "error");
       }
     } catch (error) {
       console.error("Login error:", error);
