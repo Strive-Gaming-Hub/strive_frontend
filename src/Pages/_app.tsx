@@ -7,7 +7,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import "../app/globals.css";
-import Loader from "@/app/components/common/Loader";
+import Loader from "@/app/components/Common/Loader";
 import { AuthProvider } from "@/app/Context/AuthContext";
 
 const rubik = Rubik({
