@@ -156,8 +156,7 @@ const Register = ({ setLoader = (t: boolean) => {} }) => {
   }, []);
 
   return !showOtp ? (
-    <div className="min-h-screen bg-[#000000] flex justify-center items-center">
-      <div className="w-[90%] md:w-[29%] h-fit bg-[#11112B] rounded-2xl flex items-center justify-center">
+      <div className="m-auto h-fit bg-[#11112B] rounded-2xl flex items-center justify-center">
         <form
           className="relative rounded m-[2rem]"
           id="registerform"
@@ -293,10 +292,8 @@ const Register = ({ setLoader = (t: boolean) => {} }) => {
           </div>
         </form>
       </div>
-    </div>
   ) : (
-    <div className="min-h-screen bg-[#000000] flex justify-center items-center">
-      <div className="w-[90%] md:w-[29%] h-fit bg-[#11112B] rounded-2xl flex items-center justify-center">
+      <div className="m-auto h-fit bg-[#11112B] rounded-2xl flex items-center justify-center">
         <div className="relative rounded m-[2rem]">
           <h2 className="text-[1.25rem] mb-1 text-center font-medium text-[#FFFFFF] leading-[30px]">
             Verify OTP
@@ -326,7 +323,6 @@ const Register = ({ setLoader = (t: boolean) => {} }) => {
           </div>
         </div>
       </div>
-    </div>
   );
 };
 

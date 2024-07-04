@@ -16,7 +16,8 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
       <div className="flex gap-2 p-2 flex-1">
         <SideBar />
 
-        <div className="flex flex-col flex-1 gap-2">
+        <div className="flex flex-col flex-1 gap-2 overflow-y-auto"
+         style={{ height: "calc(100vh - 5.5rem)" }}>
           {children}
         </div>
       </div>

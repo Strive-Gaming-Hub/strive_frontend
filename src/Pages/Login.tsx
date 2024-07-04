@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "../app/globals.css";
 import { IoClose } from "react-icons/io5";
 import { getGoogleLoginUrl, striveLogin } from "@/Auth/Login";
 import { showToast } from "@/app/notifier/toast";
+import Link from "next/link";
 
 const Login = ({ setLoader = (t: boolean) => {} }) => {
   const [error, setError] = React.useState<string>("");
@@ -75,12 +76,16 @@ const Login = ({ setLoader = (t: boolean) => {} }) => {
       setLoader(false);
     }
   };
+  useEffect(() => {
+    setLoader(false);
+    return () => {
+      setLoader(true);
+    };
+  }, []);
 
   return (
-    <div className=" bg-[#000000] flex justify-center items-center">
-      {/* Loader component conditionally rendered based on loading state */}
 
-      <div className="w-[90%] md:w-[29%] bg-[#11112B] rounded-2xl flex flex-col items-center justify-center p-4">
+      <div className=" bg-[#11112B] rounded-2xl flex flex-col items-center justify-center p-4 m-auto">
         <form
           className="w-full relative rounded"
           id="login"
@@ -145,7 +150,7 @@ const Login = ({ setLoader = (t: boolean) => {} }) => {
         <p className="text-[#8E84A3] mt-4 w-fit m-auto text-[0.8rem] font-medium">
           New user?{" "}
           <span className="text-white border-b-2">
-            <a href="/register">Create an account</a>
+          <Link href="/register">Create an account</Link>
           </span>
         </p>
         {googleLoginMessage && (
@@ -154,7 +159,6 @@ const Login = ({ setLoader = (t: boolean) => {} }) => {
           </p>
         )}
       </div>
-    </div>
   );
 };
 
