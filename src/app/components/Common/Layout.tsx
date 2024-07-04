@@ -8,7 +8,7 @@ interface LayoutProps {
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
   return (
-    <div className="bg-[#090C23] flex flex-col" style={{ height: "calc(100% - 4.5rem)" }}>
+    <div className="bg-[#090C23] flex flex-col" >
       <div className="flex-none">
         <NavBar />
       </div>
