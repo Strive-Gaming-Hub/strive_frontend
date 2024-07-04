@@ -1,6 +1,7 @@
 import axios from "axios";
 import Cookies from "js-cookie";
 import { api } from "./client";
+import { error } from "console";
 
 export const login = async (email: string, password: string) => {
   try {
@@ -34,15 +35,15 @@ export const striveLogin = async (formData: FormData) => {
 
 // Function to handle Google login
 export const getGoogleLoginUrl = async () => {
-    return api
-  .get("/api/v1/auth/googleAuthUrl")
-  .then((response) => {
-    console.log("fetch successful");
-    return response.data;
-  })
-  .catch((error) => {
-    return error.response.data;
-  });
+  return api
+    .get("/api/v1/auth/googleAuthUrl")
+    .then((response) => {
+      console.log("fetch successful");
+      return response.data;
+    })
+    .catch((error) => {
+      return error.response.data;
+    });
 };
 
 export const handleOAuthCallback = async (code: string) => {
@@ -70,3 +71,18 @@ export const handleOAuthCallback = async (code: string) => {
   }
 };
 
+export const changePasswordAPI = async (formData: any) => {
+  console.log("formdata", formData.get("username"));
+  return api
+    .post("/api/v1/auth/changePassword", formData)
+    .then((response) => {
+      console.log("fetch successful");
+      return response.data;
+    })
+    .catch((error) => {
+      return error.response.data;
+    });
+  // const res = await api.post("/api/v1/auth/changePassword", formData);
+  // console.log("hitted");
+  // return res;
+};

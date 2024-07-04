@@ -77,7 +77,6 @@ const Sidebar = () => {
           </ul>
         </div>
       )}
-
       {/* Menu Options */}
       <ul className="py-2">
         <li className="px-2 py-2 flex flex-row cursor-pointer group text-[#8E84A3] text-[16px] hover:bg-[#1F1943] hover:text-[#FFFFFF] rounded-md">
@@ -103,6 +102,11 @@ const Sidebar = () => {
         <li className="px-2 py-2 flex flex-row cursor-pointer group text-[#8E84A3] text-[16px] hover:bg-[#1F1943] hover:text-[#FFFFFF] rounded-md">
           <Link href="/">
             <span>Help & Support</span>
+          </Link>
+        </li>
+        <li className="px-2 py-2 flex flex-row cursor-pointer group text-[#8E84A3] text-[16px] hover:bg-[#1F1943] hover:text-[#FFFFFF] rounded-md">
+          <Link href="/changepassword">
+            <span>Change Password</span>
           </Link>
         </li>
       </ul>
