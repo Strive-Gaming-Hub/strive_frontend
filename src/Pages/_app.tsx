@@ -7,8 +7,8 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import "../app/globals.css";
-import Loader from "@/app/components/Common/Loader";
-import { AuthProvider } from "@/app/Context/AuthContext";
+import Loader from "../app/components/Common/Loader";
+import { AuthProvider } from "../app/Context/AuthContext";
 
 const rubik = Rubik({
   subsets: ["latin"],
@@ -22,15 +22,27 @@ export default function App({ Component, pageProps }: AppProps) {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
   const [loader, setLoader] = useState(false);
 
-  const shouldRenderSidebar = route !== "/login" && route !== "/register";
+  const shouldRenderSidebar = route !== "/Login" && route !== "/Register";
   const shouldRenderNavBar = route !== "/login" && route !== "/register";
   const toggleSidebar = () => setSidebarOpen(!isSidebarOpen);
 
   return (
     <AuthProvider>
       <div className={`min-h-screen w-full font-rubik ${rubik.variable}`}>
-      {shouldRenderSidebar && (
-        <Layout>
+        {/* {shouldRenderSidebar && (
+          <Layout>
+            {loader && <Loader />}
+            <Component {...pageProps} setLoader={setLoader} />
+            <ToastContainer
+              theme="dark"
+              closeOnClick
+              hideProgressBar
+              style={{ fontSize: "14px" }}
+            />
+          </Layout>
+        )} */}
+        <div className={`min-h-screen w-full font-rubik ${rubik.variable}`}>
+          {shouldRenderSidebar && <Layout />}
           {loader && <Loader />}
           <Component {...pageProps} setLoader={setLoader} />
           <ToastContainer
@@ -39,10 +51,8 @@ export default function App({ Component, pageProps }: AppProps) {
             hideProgressBar
             style={{ fontSize: "14px" }}
           />
-          {/* </div> */}
-        </Layout>
-      )}
-    </div>
+        </div>
+      </div>
     </AuthProvider>
   );
 }
