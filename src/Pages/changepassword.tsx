@@ -3,7 +3,7 @@ import { showToast } from "@/app/notifier/toast";
 import React from "react";
 import { IoClose } from "react-icons/io5";
 
-const changePassword = ({ setLoader = (t: boolean) => {} }) => {
+const ChangePassword = ({ setLoader = (t: boolean) => {} }) => {
   const [msg, setMsg] = React.useState("");
   const handleChangePassword = async (e: any) => {
     e.preventDefault();
@@ -94,4 +94,4 @@ const changePassword = ({ setLoader = (t: boolean) => {} }) => {
   );
 };
 
-export default changePassword;
+export default ChangePassword;

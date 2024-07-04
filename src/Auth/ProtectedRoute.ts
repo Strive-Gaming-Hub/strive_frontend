@@ -1,17 +1,17 @@
-import { useRouter } from 'next/router';
-import { useEffect } from 'react';
+// import { useRouter } from 'next/router';
+// import { useEffect } from 'react';
 
-const ProtectedRoute = ({ children }) => {
-  const router = useRouter();
+// const ProtectedRoute = ({ children: }) => {
+//   const router = useRouter();
   
-  useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (!token) {
-      router.push('/login');
-    }
-  }, [router]);
+//   useEffect(() => {
+//     const token = localStorage.getItem('token');
+//     if (!token) {
+//       router.push('/login');
+//     }
+//   }, [router]);
 
-  return <>{children}</>;
-};
+//   return <>{children}</>;
+// };
 
-export default ProtectedRoute;
+// export default ProtectedRoute;
