@@ -77,7 +77,7 @@ const Login = ({ setLoader = (t: boolean) => {} }) => {
   };
 
   return (
-    <div className="min-h-screen bg-[#000000] flex justify-center items-center">
+    <div className=" bg-[#000000] flex justify-center items-center">
       {/* Loader component conditionally rendered based on loading state */}
 
       <div className="w-[90%] md:w-[29%] bg-[#11112B] rounded-2xl flex flex-col items-center justify-center p-4">

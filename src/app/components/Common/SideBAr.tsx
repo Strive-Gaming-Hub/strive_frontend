@@ -21,7 +21,9 @@ const Sidebar = () => {
   };
 
   return (
-    <div className="relative min-h-screen bg-[#11112B] text-white w-full rounded-xl md:w-64 flex flex-col">
+    <div className="relative bg-[#11112B] text-white w-full rounded-xl md:w-64 flex flex-col"
+    style={{ height: "calc(100vh - 5.5rem)" }}
+    >
       {/* Profile section */}
       <div
         className="p-1 flex items-center justify-between cursor-pointer rounded-md mt-3 bg-[#1C1C3A]"

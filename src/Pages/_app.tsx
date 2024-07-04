@@ -17,31 +17,22 @@ const rubik = Rubik({
 });
 
 export default function App({ Component, pageProps }: AppProps) {
-  const router = useRouter();
-  const { route } = router;
-  const [isSidebarOpen, setSidebarOpen] = useState(false);
   const [loader, setLoader] = useState(false);
-
-  const shouldRenderSidebar = route !== "/Login" && route !== "/Register";
-  const shouldRenderNavBar = route !== "/login" && route !== "/register";
-  const toggleSidebar = () => setSidebarOpen(!isSidebarOpen);
 
   return (
     <AuthProvider>
       <div className={`min-h-screen w-full font-rubik ${rubik.variable}`}>
-        {/* {shouldRenderSidebar && (
-          <Layout>
-            {loader && <Loader />}
-            <Component {...pageProps} setLoader={setLoader} />
-            <ToastContainer
+      {loader && <Loader />}
+        <Layout>
+          <Component {...pageProps} setLoader={setLoader} />
+        </Layout>
+        <ToastContainer
               theme="dark"
               closeOnClick
               hideProgressBar
               style={{ fontSize: "14px" }}
             />
-          </Layout>
-        )} */}
-        <div className={`min-h-screen w-full font-rubik ${rubik.variable}`}>
+        {/* <div className={`min-h-screen w-full font-rubik ${rubik.variable}`}>
           {shouldRenderSidebar && <Layout />}
           {loader && <Loader />}
           <Component {...pageProps} setLoader={setLoader} />
@@ -51,7 +42,7 @@ export default function App({ Component, pageProps }: AppProps) {
             hideProgressBar
             style={{ fontSize: "14px" }}
           />
-        </div>
+        </div> */}
       </div>
     </AuthProvider>
   );
