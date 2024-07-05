@@ -5,6 +5,8 @@ import { striveLogin } from "@/Auth/Login";
 import { showToast } from "@/app/notifier/toast";
 import Link from "next/link";
 import { getGoogleAuthUrl } from "@/Auth/GoogleAuth";
+
+
 const Login = ({ setLoader = (t: boolean) => {} }) => {
   const [error, setError] = React.useState<string>("");
   const [googleLoginMessage, setGoogleLoginMessage] =
@@ -42,9 +44,6 @@ const Login = ({ setLoader = (t: boolean) => {} }) => {
     try {
       const res = await striveLogin(formData);
       if (res.status_code === 200) {
-        localStorage.setItem("user", JSON.stringify(res.data.userData));
-        localStorage.setItem("accessToken", res.data.access_token);
-        localStorage.setItem("refreshToken", res.data.refresh_token);
         showToast("Login successful", "success");
         window.location.href = "/";
       } else {
