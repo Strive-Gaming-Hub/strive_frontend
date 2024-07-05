@@ -62,6 +62,7 @@ const Register = ({ setLoader = (t: boolean) => {} }) => {
       setMsg("Please enter a valid date of birth");
       showToast(`${msg}`, "info");
       console.error("Invalid date of birth");
+      setLoader(false);
       return;
     }
 
@@ -72,21 +73,21 @@ const Register = ({ setLoader = (t: boolean) => {} }) => {
     if (day < 1 || day > 31) {
       setMsg("Day must be between 1 and 31");
       console.error("Day must be between 1 and 31");
+      setLoader(false);
       return;
     }
 
     if (month < 1 || month > 12) {
       setMsg("Month must be between 1 and 12");
       showToast(`${msg}`, "info");
-      console.error("Month must be between 1 and 12");
+      setLoader(false);
       return;
     }
 
-    if (year > currentYear - 18 || year < 1900) {
+    if (year > currentYear - 18) {
       // Assuming reasonable range for DOB year
-      setMsg(`Year must be between 1900 and ${currentYear}`);
-      showToast(`${msg}`, "info");
-      console.error(`Year must be between 1900 and ${currentYear - 18}`);
+      showToast("age less than 18", "info");
+      setLoader(false);
       return;
     }
 
@@ -100,6 +101,7 @@ const Register = ({ setLoader = (t: boolean) => {} }) => {
       setMsg("You must be at least 18 years old to register");
       showToast(`${msg}`, "info");
       console.error("User is below 18 years old");
+      setLoader(false);
       return;
     }
 
@@ -122,22 +124,17 @@ const Register = ({ setLoader = (t: boolean) => {} }) => {
     console.log(res.data);
     // console.log(res.data.username);
 
-    if (res.status_code === 200) {
+    if (res.status_code == 200) {
       const name = res.data.username;
       setName(name);
       setShowOtp(true);
       setMsg("successfuly registered");
-      showToast(`${msg}`, "success");
       setLoader(false);
+      showToast(msg as string, "success");
     } else {
       setMsg(res.message);
       setLoader(false);
-      //want to send msg to toast
       showToast(`${msg}`, "error");
-      // showToast({ `msg` }, "error");
-      console.log(
-        "not getting response from backend, we are trying our best... try again later"
-      );
     }
 
     // setShowOtp(true);

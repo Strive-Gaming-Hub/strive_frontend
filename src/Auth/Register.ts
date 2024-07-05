@@ -40,11 +40,7 @@ export const registerUser = async (formData: any) => {
       return response.data;
     })
     .catch((error) => {
-      console.error(
-        "Failed to register user:",
-        error,
-        "error to register user "
-      );
+      console.error("Failed to register user:", error);
       console.log(
         "error to register user through api, wait for some time and try again"
       );
