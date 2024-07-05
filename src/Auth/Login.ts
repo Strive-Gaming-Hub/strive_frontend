@@ -3,6 +3,7 @@ import Cookies from "js-cookie";
 import { api } from "./client";
 import { error } from "console";
 import { createUserSession } from "./UserSession";
+import { token, userData } from "./interfaces";
 
 
 
@@ -24,17 +25,7 @@ export const login = async (email: string, password: string) => {
   }
 };
 
-export interface userData {
-  email: string;
-  name: string;
-  phone: string;
-  dob: string;
-  // Add other fields as per your backend response
-}
-export interface token{
-  access_token: string;
-  refresh_token: string;
-}
+
 
 export const striveLogin = async (formData: FormData) => {
   return api
