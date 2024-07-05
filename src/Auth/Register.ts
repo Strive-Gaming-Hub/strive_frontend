@@ -40,11 +40,7 @@ export const registerUser = async (formData: any) => {
       return response.data;
     })
     .catch((error) => {
-      console.error(
-        "Failed to register user:",
-        error,
-        "error to register user "
-      );
+      console.error("Failed to register user:", error);
       console.log(
         "error to register user through api, wait for some time and try again"
       );
@@ -54,12 +50,11 @@ export const registerUser = async (formData: any) => {
 
 export const getGoogleRegisterUrl = async () => {
   try {
-    const response = await axios.get("/api/v1/auth/getGoogleAuthUrl");
-    const { url } = response.data.data;
+    const response = await axios.get("/api/v1/auth/GoogleAuthUrl");
     //Redirecting the user to the Google
-    return url;
-  } catch (error) {
+    return response.data;
+  } catch (error: any) {
     console.error("Error fetching Google OAuth URL:", error);
-    console.log("error fetching google url, wait for some time and try again");
+    return error.response.data;
   }
 };

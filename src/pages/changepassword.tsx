@@ -20,11 +20,11 @@ const ChangePassword = ({ setLoader = (t: boolean) => {} }) => {
 
     if (res.status_code == 200) {
       setMsg(res.message);
-      showToast("Password changed successfully", "success");
+      showToast(`${msg}`, "success");
       window.location.href = "/";
     } else {
-      //   setMsg(res.message);
-      showToast("Password change failed:" + res.message, "error");
+      setMsg(res.message);
+      showToast(`${msg}`, "error");
       setLoader(false);
     }
   };
