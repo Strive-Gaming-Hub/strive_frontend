@@ -8,7 +8,7 @@ import { getGoogleAuthUrl } from "@/Auth/GoogleAuth";
 
 
 const Login = ({ setLoader = (t: boolean) => {} }) => {
-  const [error, setError] = React.useState<string>("");
+  // const [error, setError] = React.useState<string>("");
   const [googleLoginMessage, setGoogleLoginMessage] =
     React.useState<string>("");
   const [loading, setLoading] = React.useState<boolean>(false);
@@ -25,7 +25,8 @@ const Login = ({ setLoader = (t: boolean) => {} }) => {
     const password = formData.get("password") as string;
 
     if (password.length < 8) {
-      setError("Password must be at least 8 characters");
+      // setError("Password must be at least 8 characters");
+      showToast("Password must be at least 8 characters!!", "info");
       return;
     }
 
@@ -36,7 +37,8 @@ const Login = ({ setLoader = (t: boolean) => {} }) => {
       formData.set("phone", credential);
     } else {
       if (credential.length <= 3) {
-        setError("Username must be greater than 3 characters");
+        // setError("Username must be greater than 3 characters");
+        showToast("Username must be greater than 3 characters!!", "info");
         return;
       }
       formData.set("username", credential);
@@ -50,18 +52,18 @@ const Login = ({ setLoader = (t: boolean) => {} }) => {
         showToast("Login successful", "success");
         window.location.href = "/";
       } else {
-        setError(res.message);
+        // setError(res.message);
+        showToast(res.message as string, "error");
         console.log(res.message);
         if (res.message == undefined) {
           showToast("Server not responding!!", "info");
           return;
         }
-        showToast(res.message as string, "error");
       }
     } catch (error) {
       console.error("Login error:", error);
       showToast("An error occurred during login.", "info");
-      setError("An error occurred during login.");
+      // setError("An error occurred during login.");
     } finally {
       setLoader(false); // Set loading state back to false
     }
@@ -144,7 +146,6 @@ const Login = ({ setLoader = (t: boolean) => {} }) => {
             <a href="">Forget your password?</a>
           </p>
         </div>
-        <p className="text-[#FF0000] text-sm">{error}</p>
         <div className="flex items-center justify-between">
           <button
             type="submit"

@@ -8,7 +8,6 @@ import { getGoogleAuthUrl } from "@/Auth/GoogleAuth";
 const Register = ({ setLoader = (t: boolean) => {} }) => {
   const [showOtp, setShowOtp] = useState(false);
   const [otp, setOtp] = useState("");
-  const [msg, setMsg] = useState("");
   const [name, setName] = useState("");
   const [pop, setPop] = useState(true);
   {
@@ -34,8 +33,7 @@ const Register = ({ setLoader = (t: boolean) => {} }) => {
         // navigate("/");
         window.location.href = "/";
       } else {
-        setMsg("OTP verification failed");
-        showToast(`${msg}`, "error");
+        showToast(`OTP verification failed!!`, "error");
         console.log("OTP verification failed");
       }
     }
@@ -56,8 +54,8 @@ const Register = ({ setLoader = (t: boolean) => {} }) => {
     console.log(day, month, year);
 
     if (isNaN(day) || isNaN(month) || isNaN(year)) {
-      setMsg("Please enter a valid date of birth");
-      showToast(`${msg}`, "info");
+      // setMsg("Please enter a valid date of birth");
+      showToast(`Please, Enter a valid DOB!!`, "info");
       console.error("Invalid date of birth");
       setLoader(false);
       return;
@@ -68,15 +66,13 @@ const Register = ({ setLoader = (t: boolean) => {} }) => {
     const currentDay = new Date().getDate();
 
     if (day < 1 || day > 31) {
-      setMsg("Day must be between 1 and 31");
-      console.error("Day must be between 1 and 31");
+      showToast(`Day must be between 1 and 31`, "info");
       setLoader(false);
       return;
     }
 
     if (month < 1 || month > 12) {
-      setMsg("Month must be between 1 and 12");
-      showToast(`${msg}`, "info");
+      showToast(`Month must be between 1 and 12`, "info");
       setLoader(false);
       return;
     }
@@ -95,9 +91,8 @@ const Register = ({ setLoader = (t: boolean) => {} }) => {
     }
 
     if (age < 18) {
-      setMsg("You must be at least 18 years old to register");
-      showToast(`${msg}`, "info");
-      console.error("User is below 18 years old");
+      // setMsg("You must be at least 18 years old to register");
+      showToast(`You must be at least 18 years old to register`, "info");
       setLoader(false);
       return;
     }
@@ -118,25 +113,21 @@ const Register = ({ setLoader = (t: boolean) => {} }) => {
     const res = await registerUser(formData);
     console.log(res);
 
-    console.log(res.data);
-    // console.log(res.data.username);
-
     if (res.status_code == 200) {
       const name = res.data.username;
       setName(name);
       setShowOtp(true);
-      setMsg("successfuly registered");
       setLoader(false);
-      showToast(msg as string, "success");
+      showToast("Successfully registered", "success");
     } else {
       if (res.message === undefined) {
         showToast("Server not responding!!", "info");
         setLoader(false);
         return;
       }
-      setMsg(res.message);
+
       setLoader(false);
-      showToast(`${msg}`, "error");
+      showToast(res.message as string, "error");
     }
 
     // setShowOtp(true);
@@ -296,7 +287,6 @@ const Register = ({ setLoader = (t: boolean) => {} }) => {
             />
           </div>
         </div>
-        <p className="text-sm text-red-700 ">{msg}</p>
         <div className="flex items-center justify-between">
           <button
             type="submit"
@@ -338,7 +328,6 @@ const Register = ({ setLoader = (t: boolean) => {} }) => {
             className="shadow appearance-none rounded-lg w-full h-[38px] py-2 px-3 mt-1 bg-[#090C23] text-[#9094A6] text-[0.88rem] leading-tight focus:outline-1 focus:shadow-outline"
           />
         </div>
-        <p className="text-sm text-red-700 ">{msg}</p>
         <div className="flex items-center justify-between">
           <button
             type="button"
