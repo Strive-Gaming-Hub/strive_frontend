@@ -1,7 +1,4 @@
-import React, { useState } from "react";
 
-import axios from "axios";
-import { stringify } from "querystring";
 import { api } from "./client";
 
 export const handleSendOtp = async (phoneNumber: string) => {
@@ -48,13 +45,3 @@ export const registerUser = async (formData: any) => {
     });
 };
 
-export const getGoogleRegisterUrl = async () => {
-  try {
-    const response = await axios.get("/api/v1/auth/GoogleAuthUrl");
-    //Redirecting the user to the Google
-    return response.data;
-  } catch (error: any) {
-    console.error("Error fetching Google OAuth URL:", error);
-    return error.response.data;
-  }
-};

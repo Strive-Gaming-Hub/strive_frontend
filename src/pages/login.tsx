@@ -1,9 +1,10 @@
 import React, { useEffect } from "react";
 import "../app/globals.css";
 import { IoClose } from "react-icons/io5";
-import { getGoogleLoginUrl, striveLogin } from "@/Auth/Login";
+import { striveLogin } from "@/Auth/Login";
 import { showToast } from "@/app/notifier/toast";
 import Link from "next/link";
+import { getGoogleAuthUrl } from "@/Auth/GoogleAuth";
 const Login = ({ setLoader = (t: boolean) => {} }) => {
   const [error, setError] = React.useState<string>("");
   const [googleLoginMessage, setGoogleLoginMessage] =
@@ -48,7 +49,12 @@ const Login = ({ setLoader = (t: boolean) => {} }) => {
         window.location.href = "/";
       } else {
         setError(res.message);
-        showToast("invalid credential, try again!!", "error");
+        console.log(res.message);
+        if (res.message == undefined) {
+          showToast("Server not responding!!", "info");
+          return;
+        }
+        showToast(res.message as string, "error");
       }
     } catch (error) {
       console.error("Login error:", error);
@@ -64,7 +70,7 @@ const Login = ({ setLoader = (t: boolean) => {} }) => {
     setLoader(true);
 
     try {
-      const response = await getGoogleLoginUrl();
+      const response = await getGoogleAuthUrl();
       if (response.status === 200) {
         const { url } = response;
         window.location.href = url;
