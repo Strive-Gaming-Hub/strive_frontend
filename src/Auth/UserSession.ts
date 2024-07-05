@@ -1,7 +1,8 @@
 import Cookies from "js-cookie";
+import { token, userData } from "./interfaces";
 
 
-export const createUserSession = (userData: any, token:any) => {
+export const createUserSession = (userData: userData, token:token) => {
     //storing the user data in the local storage
     localStorage.setItem("userData", JSON.stringify(userData));
 
