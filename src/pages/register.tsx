@@ -1,9 +1,13 @@
 import React, { useState, FormEvent, useEffect } from "react";
 import "../app/globals.css";
 import { IoClose } from "react-icons/io5";
-import { handleSendOtp, handleVerifyOtp, registerUser } from "../Auth/Register";
-import { getGoogleRegisterUrl } from "../Auth/Register";
+import {
+  handleSendOtp,
+  handleVerifyOtp,
+  registerUser,
+} from "../Auth/Register";
 import { showToast } from "@/app/notifier/toast";
+import { getGoogleAuthUrl } from "@/Auth/GoogleAuth";
 
 const Register = ({ setLoader = (t: boolean) => {} }) => {
   const [showOtp, setShowOtp] = useState(false);
@@ -149,7 +153,7 @@ const Register = ({ setLoader = (t: boolean) => {} }) => {
   const handleGoogleRegister = async () => {
     setLoader(true);
     console.log("google register");
-    const res = await getGoogleRegisterUrl();
+    const res = await getGoogleAuthUrl();
     console.log(res);
     if (res.status_code !== 200) {
       const msg = res.message;
