@@ -30,9 +30,6 @@ const Register = ({ setLoader = (t: boolean) => {} }) => {
           username: res.data.username,
         };
 
-        localStorage.setItem("user", JSON.stringify(user));
-        localStorage.setItem("accessToken", res.data.accessToken);
-        localStorage.setItem("refreshToken", res.data.refreshToken);
         showToast("OTP verification successful", "success");
         // navigate("/");
         window.location.href = "/";
