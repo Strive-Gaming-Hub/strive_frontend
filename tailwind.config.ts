@@ -16,8 +16,12 @@ const config: Config = {
       fontFamily: {
         rubik: ["var(--font-rubik)"],
       },
+      spacing: {
+        '21': '5.60rem'
+      },
     },
   },
   plugins: [],
 };
+
 export default config;
