@@ -1,11 +1,7 @@
 import React, { useState, FormEvent, useEffect } from "react";
 import "../app/globals.css";
 import { IoClose } from "react-icons/io5";
-import {
-  handleSendOtp,
-  handleVerifyOtp,
-  registerUser,
-} from "../Auth/Register";
+import { handleSendOtp, handleVerifyOtp, registerUser } from "../Auth/Register";
 import { showToast } from "@/app/notifier/toast";
 import { getGoogleAuthUrl } from "@/Auth/GoogleAuth";
 
@@ -136,6 +132,11 @@ const Register = ({ setLoader = (t: boolean) => {} }) => {
       setLoader(false);
       showToast(msg as string, "success");
     } else {
+      if (res.message === undefined) {
+        showToast("Server not responding!!", "info");
+        setLoader(false);
+        return;
+      }
       setMsg(res.message);
       setLoader(false);
       showToast(`${msg}`, "error");
@@ -156,6 +157,11 @@ const Register = ({ setLoader = (t: boolean) => {} }) => {
     const res = await getGoogleAuthUrl();
     console.log(res);
     if (res.status_code !== 200) {
+      if (res.message === undefined) {
+        showToast("Server not responding!!", "info");
+        setLoader(false);
+        return;
+      }
       const msg = res.message;
       showToast(msg as string, "error");
       setLoader(false);
