@@ -75,8 +75,13 @@ const Login = ({ setLoader = (t: boolean) => {} }) => {
         const { url } = response;
         window.location.href = url;
       } else {
+        if (response.message == undefined) {
+          showToast("Server not responding!!", "info");
+          setLoader(false);
+          return;
+        }
         console.log(response.status, response.message);
-        showToast("An error during Google login.", "error");
+        showToast(response.message as string, "error");
       }
     } catch (error) {
       console.error("Google login error:", error);
