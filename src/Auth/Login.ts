@@ -2,6 +2,10 @@ import axios from "axios";
 import Cookies from "js-cookie";
 import { api } from "./client";
 import { error } from "console";
+import { createUserSession } from "./UserSession";
+import { token, userData } from "./interfaces";
+
+
 
 export const login = async (email: string, password: string) => {
   try {
@@ -21,11 +25,24 @@ export const login = async (email: string, password: string) => {
   }
 };
 
+
+
 export const striveLogin = async (formData: FormData) => {
   return api
     .post("/api/v1/auth/login", formData)
     .then((response) => {
       console.log("fetch successful");
+      if(response.status === 200) {
+        console.log(response.data.data)
+        // convert response to correct data format
+        const userData: userData = response.data.data.userData;
+        const token: token = {
+          access_token: response.data.data.access_token,
+          refresh_token: response.data.data.refresh_token,
+        };
+        console.log(userData, token);
+        createUserSession(userData, token);
+      }
       return response.data;
     })
     .catch((error) => {
@@ -40,6 +57,8 @@ export const changePasswordAPI = async (formData: any) => {
     .post("/api/v1/auth/changePassword", formData)
     .then((response) => {
       console.log("fetch successful");
+      
+        
       return response.data;
     })
     .catch((error) => {
@@ -49,3 +68,5 @@ export const changePasswordAPI = async (formData: any) => {
   // console.log("hitted");
   // return res;
 };
+
+

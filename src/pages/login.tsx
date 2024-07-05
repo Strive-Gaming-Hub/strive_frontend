@@ -5,12 +5,17 @@ import { striveLogin } from "@/Auth/Login";
 import { showToast } from "@/app/notifier/toast";
 import Link from "next/link";
 import { getGoogleAuthUrl } from "@/Auth/GoogleAuth";
+
+
 const Login = ({ setLoader = (t: boolean) => {} }) => {
   // const [error, setError] = React.useState<string>("");
   const [googleLoginMessage, setGoogleLoginMessage] =
     React.useState<string>("");
   const [loading, setLoading] = React.useState<boolean>(false);
 
+
+
+{/*Handling normal login*/}
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     const form = document.getElementById("login") as HTMLFormElement;
@@ -44,9 +49,6 @@ const Login = ({ setLoader = (t: boolean) => {} }) => {
     try {
       const res = await striveLogin(formData);
       if (res.status_code === 200) {
-        localStorage.setItem("user", JSON.stringify(res.data.userData));
-        localStorage.setItem("accessToken", res.data.access_token);
-        localStorage.setItem("refreshToken", res.data.refresh_token);
         showToast("Login successful", "success");
         window.location.href = "/";
       } else {
@@ -68,30 +70,33 @@ const Login = ({ setLoader = (t: boolean) => {} }) => {
   };
 
   const handleGoogleLogin = async () => {
-    setGoogleLoginMessage("Wait in the queue, you are next");
     setLoader(true);
-
-    try {
-      const response = await getGoogleAuthUrl();
-      if (response.status === 200) {
-        const { url } = response;
-        window.location.href = url;
-      } else {
-        if (response.message == undefined) {
-          showToast("Server not responding!!", "info");
-          setLoader(false);
-          return;
-        }
-        console.log(response.status, response.message);
-        showToast(response.message as string, "error");
+    console.log("google register");
+    const res = await getGoogleAuthUrl();
+    console.log(res);
+    if (res.status_code !== 200) {
+      if (res.message === undefined) {
+        showToast("Server not responding!!", "info");
+        setLoader(false);
+        return;
       }
-    } catch (error) {
-      console.error("Google login error:", error);
-      showToast("An error on server!", "info");
-    } finally {
+      const msg = res.message;
+      showToast(msg as string, "error");
       setLoader(false);
+      return;
+    } else {
+      if (res.data.url) {
+        window.location.href = res.data.url;
+      } else {
+        showToast("Unknown Error Occured", "warn");
+        setLoader(false);
+      }
+      // setLoader(false);
     }
+    // window.location.href = url;
   };
+
+
   useEffect(() => {
     setLoader(false);
     return () => {

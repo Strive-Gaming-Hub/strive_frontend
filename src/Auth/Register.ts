@@ -1,5 +1,7 @@
 
+import { createUserSession } from "./UserSession";
 import { api } from "./client";
+import { token, userData } from "./interfaces";
 
 export const handleSendOtp = async (phoneNumber: string) => {
   // Send OTP to the server
@@ -20,6 +22,22 @@ export const handleVerifyOtp = async (formData: any) => {
     .post("/api/v1/auth/otp", formData)
     .then((response) => {
       console.log("OTP verification successful");
+      if(response.status === 200) {
+        console.log(response.data.data)
+        // convert response to correct data format
+        const userData: userData ={
+          email: response.data.data.email,
+          username: response.data.data.username,
+          phone: response.data.data.phone,
+          dob: response.data.data.dob,
+        }
+        const token: token = {
+          access_token: response.data.data.access_token,
+          refresh_token: response.data.data.refresh_token,
+        };
+        console.log(userData, token);
+        createUserSession(userData, token);
+      }
       return response.data;
     })
     .catch((error) => {
@@ -29,11 +47,16 @@ export const handleVerifyOtp = async (formData: any) => {
     });
 };
 
+
+
+
 export const registerUser = async (formData: any) => {
   // Register the user
   return api
     .put("/api/v1/auth/user", formData)
     .then((response) => {
+      
+
       return response.data;
     })
     .catch((error) => {
