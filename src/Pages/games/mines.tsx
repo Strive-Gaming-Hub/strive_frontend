@@ -1,8 +1,14 @@
 import { showToast } from "@/app/notifier/toast";
 import React, { useEffect, useState } from "react";
 import { MdCasino } from "react-icons/md";
+import { getUserSession } from "@/Auth/UserSession";
 
 const Mines = ({ setLoader = (t: boolean) => {} }) => {
+  if (!getUserSession().userData) {
+    showToast("Please login to play", "error");
+    window.location.href = "/login";
+  }
+
   const gridItems = Array.from({ length: 25 }, (_, i) => i + 1);
 
   const [gameactive, setGameactive] = useState(false);
@@ -25,6 +31,11 @@ const Mines = ({ setLoader = (t: boolean) => {} }) => {
     if (isNaN(amount) || amount < 100) {
       showToast("Please enter a valid amount", "error");
       return;
+    }
+
+    if (!getUserSession().userData) {
+      showToast("Please login to play", "error");
+      window.location.href = "/login";
     }
 
     const board1 = Array(25).fill(false);
