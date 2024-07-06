@@ -1,7 +1,6 @@
 import axios from "axios";
 import Cookies from "js-cookie";
 import { api } from "./client";
-import { error } from "console";
 import { createUserSession } from "./UserSession";
 import { token, userData } from "./interfaces";
 
@@ -33,7 +32,7 @@ export const striveLogin = async (formData: FormData) => {
     .then((response) => {
       console.log("fetch successful");
       if(response.status === 200) {
-        console.log(response.data.data)
+        console.log(response.data.data.userData)
         // convert response to correct data format
         const userData: userData = response.data.data.userData;
         const token: token = {
@@ -43,6 +42,7 @@ export const striveLogin = async (formData: FormData) => {
         console.log(userData, token);
         createUserSession(userData, token);
       }
+
       return response.data;
     })
     .catch((error) => {

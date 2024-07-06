@@ -1,6 +1,6 @@
 import { changePasswordAPI } from "@/Auth/Login";
 import { showToast } from "@/app/notifier/toast";
-import React from "react";
+import React, { useEffect } from "react";
 import { IoClose } from "react-icons/io5";
 
 const ChangePassword = ({ setLoader = (t: boolean) => {} }) => {
@@ -28,6 +28,13 @@ const ChangePassword = ({ setLoader = (t: boolean) => {} }) => {
       setLoader(false);
     }
   };
+
+  useEffect(() => {
+    setLoader(false);
+    return () => {
+      setLoader(true);
+    };
+  }, []);
 
   return (
     <div className="flex justify-center items-center">
