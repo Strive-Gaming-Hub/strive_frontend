@@ -1,7 +1,13 @@
 import Container from "@/app/components/Common/Container";
-import React from "react";
+import React, { useEffect } from "react";
 
-export default function Home() {
+export default function Home({ setLoader = (t: boolean) => {} }) {
+  useEffect(() => {
+    setLoader(false);
+    return () => {
+      setLoader(true);
+    };
+  }, []);
   return (
     <>
       <Container

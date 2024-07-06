@@ -17,7 +17,7 @@ const rubik = Rubik({
 });
 
 export default function App({ Component, pageProps }: AppProps) {
-  const [loader, setLoader] = useState(false);
+  const [loader, setLoader] = useState(true);
 
   return (
     <AuthProvider>
