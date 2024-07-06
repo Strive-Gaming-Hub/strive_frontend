@@ -28,11 +28,11 @@ const Mines = ({ setLoader = (t: boolean) => {} }) => {
       return;
     }
 
-    if (!getUserSession().userData) {
-      showToast("Please Sign in to play", "error");
-      // wait for 2 seconds
-      return;
-    }
+    // if (!getUserSession().userData) {
+    //   showToast("Please Sign in to play", "error");
+    //   // wait for 2 seconds
+    //   return;
+    // }
 
     const board1 = Array(25).fill(false);
     let temptnt = tnt;
