@@ -1,17 +1,18 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { RiArrowRightSLine, RiArrowLeftSLine } from "react-icons/ri";
-import { useAuth } from "@/app/Context/AuthContext";
+import { getUserSession } from "@/Auth/UserSession";
 
 const Sidebar = () => {
   const [isDropdownOpen, setDropdownOpen] = useState(false);
-  const [username, setUsername] = useState("");
+  const [username, setUsername] = useState<string>("");
 
   useEffect(() => {
-    // Fetch user data from localStorage
-    const user = JSON.parse(localStorage.getItem("userData") || "{}");
-    if (user && user.username) {
-      setUsername(user.username);
+    if (typeof window !== "undefined") {
+      const { userData } = getUserSession();
+      if (userData && userData.username) {
+        setUsername(userData.username);
+      }
     }
   }, []);
 

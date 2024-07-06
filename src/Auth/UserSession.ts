@@ -19,3 +19,27 @@ export const createUserSession = (userData: userData, token:token) => {
     });
     return true;
 }
+
+export const getUserSession = () => {
+    if (typeof window === "undefined") {
+        return {
+            userData: null,
+            refreshToken: null,
+        };
+    }
+    const userData = localStorage.getItem("userData");
+    const refreshToken = Cookies.get("refreshToken");
+    return {
+        userData: userData ? JSON.parse(userData) : null,
+        refreshToken,
+    };
+    
+}
+
+
+export const deleteUserSession = () =>{
+    localStorage.removeItem("userData");
+    Cookies.remove("accessToken");
+    Cookies.remove("refreshToken");
+    return true;
+}
