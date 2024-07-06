@@ -4,6 +4,7 @@ import { IoClose } from "react-icons/io5";
 import { handleSendOtp, handleVerifyOtp, registerUser } from "../Auth/Register";
 import { showToast } from "@/app/notifier/toast";
 import { getGoogleAuthUrl } from "@/Auth/GoogleAuth";
+import { INVALID_DATE, INVALID_DOB, INVALID_MONTH, OTP_VERIFICATION_ERROR, SERVER_ERROR_MESSAGE, UNKNOWN_ERROR_MESSAGE, USER_UNDER_AGE } from "@/app/constants/errorMessages";
 
 const Register = ({ setLoader = (t: boolean) => {} }) => {
   const [showOtp, setShowOtp] = useState(false);
@@ -33,7 +34,7 @@ const Register = ({ setLoader = (t: boolean) => {} }) => {
         // navigate("/");
         window.location.href = "/";
       } else {
-        showToast(`OTP verification failed!!`, "error");
+        showToast(OTP_VERIFICATION_ERROR, "error");
         console.log("OTP verification failed");
       }
     }
@@ -55,7 +56,7 @@ const Register = ({ setLoader = (t: boolean) => {} }) => {
 
     if (isNaN(day) || isNaN(month) || isNaN(year)) {
       // setMsg("Please enter a valid date of birth");
-      showToast(`Please, Enter a valid DOB!!`, "info");
+      showToast(INVALID_DOB, "info");
       console.error("Invalid date of birth");
       setLoader(false);
       return;
@@ -66,13 +67,13 @@ const Register = ({ setLoader = (t: boolean) => {} }) => {
     const currentDay = new Date().getDate();
 
     if (day < 1 || day > 31) {
-      showToast(`Day must be between 1 and 31`, "info");
+      showToast(INVALID_DATE, "info");
       setLoader(false);
       return;
     }
 
     if (month < 1 || month > 12) {
-      showToast(`Month must be between 1 and 12`, "info");
+      showToast(INVALID_MONTH, "info");
       setLoader(false);
       return;
     }
@@ -92,7 +93,7 @@ const Register = ({ setLoader = (t: boolean) => {} }) => {
 
     if (age < 18) {
       // setMsg("You must be at least 18 years old to register");
-      showToast(`You must be at least 18 years old to register`, "info");
+      showToast(USER_UNDER_AGE, "info");
       setLoader(false);
       return;
     }
@@ -121,7 +122,7 @@ const Register = ({ setLoader = (t: boolean) => {} }) => {
       showToast("Successfully registered", "success");
     } else {
       if (res.message === undefined) {
-        showToast("Server not responding!!", "info");
+        showToast(SERVER_ERROR_MESSAGE, "info");
         setLoader(false);
         return;
       }
@@ -146,7 +147,7 @@ const Register = ({ setLoader = (t: boolean) => {} }) => {
     console.log(res);
     if (res.status_code !== 200) {
       if (res.message === undefined) {
-        showToast("Server not responding!!", "info");
+        showToast(SERVER_ERROR_MESSAGE, "info");
         setLoader(false);
         return;
       }
@@ -158,7 +159,7 @@ const Register = ({ setLoader = (t: boolean) => {} }) => {
       if (res.data.url) {
         window.location.href = res.data.url;
       } else {
-        showToast("Unknown Error Occured", "warn");
+        showToast(UNKNOWN_ERROR_MESSAGE, "warn");
         setLoader(false);
       }
       // setLoader(false);
