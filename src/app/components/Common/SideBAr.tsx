@@ -5,12 +5,11 @@ import { useAuth } from "@/app/Context/AuthContext";
 
 const Sidebar = () => {
   const [isDropdownOpen, setDropdownOpen] = useState(false);
-  const { isAuthenticated, logout } = useAuth();
   const [username, setUsername] = useState("");
 
   useEffect(() => {
-    // Fetch user data from backend or localStorage
-    const user = JSON.parse(localStorage.getItem("user") || "{}");
+    // Fetch user data from localStorage
+    const user = JSON.parse(localStorage.getItem("userData") || "{}");
     if (user && user.username) {
       setUsername(user.username);
     }
@@ -21,8 +20,9 @@ const Sidebar = () => {
   };
 
   return (
-    <div className="relative bg-[#11112B] text-white w-full rounded-xl md:w-64 flex flex-col"
-    style={{ height: "calc(100vh - 5.8rem)" }}
+    <div
+      className="relative bg-[#11112B] text-white w-full rounded-xl md:w-64 flex flex-col"
+      style={{ height: "calc(100vh - 5.8rem)" }}
     >
       {/* Profile section */}
       <div
