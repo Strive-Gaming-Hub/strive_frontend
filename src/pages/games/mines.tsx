@@ -38,10 +38,10 @@ const Mines = ({ setLoader = (t: boolean) => {} }) => {
     let temptnt = tnt;
     while (temptnt > 0) {
       const randomIndex = Math.floor(Math.random() * 25);
-      if (!board[randomIndex]) {
+      if (!board1[randomIndex]) {
         board1[randomIndex] = true;
         temptnt--;
-        // console.log("TNT", randomIndex);
+        console.log("TNT", randomIndex);
       }
     }
 
@@ -196,8 +196,9 @@ const Mines = ({ setLoader = (t: boolean) => {} }) => {
             <button
               className="bg-[#9562FF] border border-[#A77CFF] rounded-md py-[0.4rem] tracking-wide"
               onClick={() => {
+                console.log("Cashout");
                 setGameactive(false);
-                setAmount(0);
+                setAmount(100);
               }}
             >
               Cashout
