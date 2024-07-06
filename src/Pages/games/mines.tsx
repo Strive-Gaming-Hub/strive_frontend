@@ -4,11 +4,6 @@ import { MdCasino } from "react-icons/md";
 import { getUserSession } from "@/Auth/UserSession";
 
 const Mines = ({ setLoader = (t: boolean) => {} }) => {
-  if (!getUserSession().userData) {
-    showToast("Please login to play", "error");
-    window.location.href = "/login";
-  }
-
   const gridItems = Array.from({ length: 25 }, (_, i) => i + 1);
 
   const [gameactive, setGameactive] = useState(false);
@@ -34,8 +29,9 @@ const Mines = ({ setLoader = (t: boolean) => {} }) => {
     }
 
     if (!getUserSession().userData) {
-      showToast("Please login to play", "error");
-      window.location.href = "/login";
+      showToast("Please Sign in to play", "error");
+      // wait for 2 seconds
+      return;
     }
 
     const board1 = Array(25).fill(false);
