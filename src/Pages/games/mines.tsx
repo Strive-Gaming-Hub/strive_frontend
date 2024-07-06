@@ -1,12 +1,12 @@
 import { showToast } from "@/app/notifier/toast";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { MdCasino } from "react-icons/md";
 
-const Mines = () => {
+const Mines = ({ setLoader = (t: boolean) => {} }) => {
   const gridItems = Array.from({ length: 25 }, (_, i) => i + 1);
 
   const [gameactive, setGameactive] = useState(false);
-  const [amount, setAmount] = useState<number>(0);
+  const [amount, setAmount] = useState<number>(100);
   const total = 25;
   const [tnt, setTnt] = useState<any>(1);
   if (tnt > 24) {
@@ -19,12 +19,28 @@ const Mines = () => {
   const [gridColors, setGridColors] = useState(Array(25).fill("#373B4E"));
   const colors = ["red", "green"];
   const [showPopup, setShowPopup] = useState(false);
+  const [board, setBoard] = useState<boolean[]>(Array(25).fill(false));
 
   const handleStartGame = () => {
     if (isNaN(amount) || amount < 100) {
       showToast("Please enter a valid amount", "error");
       return;
     }
+
+    const board1 = Array(25).fill(false);
+    let temptnt = tnt;
+    while (temptnt > 0) {
+      const randomIndex = Math.floor(Math.random() * 25);
+      if (!board[randomIndex]) {
+        board1[randomIndex] = true;
+        temptnt--;
+        // console.log("TNT", randomIndex);
+      }
+    }
+
+    // console.log("board", board1);
+
+    setBoard(board1);
     setGameactive(true);
     showToast("Game started", "success");
     setGridColors(Array(25).fill("#373B4E"));
@@ -32,20 +48,27 @@ const Mines = () => {
 
   const handleClick = (index: number) => {
     if (gridColors[index] !== "#373B4E") return; // If already clicked, do nothing
-
+    console.log("board", board);
     if (gameactive) {
-      const newGridColors = [...gridColors];
-      const randomColor = colors[Math.floor(Math.random() * colors.length)];
-      newGridColors[index] = randomColor;
-      setGridColors(newGridColors);
-
-      if (randomColor === "red") {
+      if (board[index]) {
+        // console.log("TNT clicked", index);
+        setGridColors((prev) => {
+          const newColors = [...prev];
+          newColors[index] = "red";
+          return newColors;
+        });
         setShowPopup(true);
         showToast("You lost", "error");
         setTimeout(() => {
           setShowPopup(false);
           resetGame();
         }, 500);
+      } else {
+        setGridColors((prev) => {
+          const newColors = [...prev];
+          newColors[index] = "green";
+          return newColors;
+        });
       }
     } else {
       showToast("Game is not active", "info");
@@ -54,11 +77,16 @@ const Mines = () => {
 
   const resetGame = () => {
     setGameactive(false);
-    setAmount(0);
-    setTnt(1);
+    setAmount(100);
+    // setTnt(1);
     setGridColors(Array(25).fill("#373B4E"));
   };
-
+  useEffect(() => {
+    setLoader(false);
+    return () => {
+      setLoader(true);
+    };
+  }, []);
   return (
     <div className="flex" style={{ height: "calc(100vh - 5.8rem)" }}>
       <div className="left text-white flex-col bg-[#1C1E29] h-full p-4 rounded-lg w-[25%]">
@@ -105,9 +133,7 @@ const Mines = () => {
               name="bomb"
               value={tnt}
               onChange={(e) =>
-                setTnt(
-                    parseInt(e.target.value) ? parseInt(e.target.value) : 0
-                  )
+                setTnt(parseInt(e.target.value) ? parseInt(e.target.value) : 0)
               }
               placeholder="TNTs"
               className="shadow appearance-none rounded-lg h-[2.5rem] py-1 px-3 bg-[#1c1e29] text-[#9094A6] text-[0.88rem] leading-tight border border-[#353849] focus:outline-1 focus:shadow-outline"
