@@ -5,6 +5,8 @@ import { striveLogin } from "@/Auth/Login";
 import { showToast } from "@/app/notifier/toast";
 import Link from "next/link";
 import { getGoogleAuthUrl } from "@/Auth/GoogleAuth";
+import { INVALID_PASSWORD, INVALID_USERNAME, LOGIN_ERROR_MESSAGE , SERVER_ERROR_MESSAGE, UNKNOWN_ERROR_MESSAGE } from "@/app/constants/errorMessages";
+
 
 
 const Login = ({ setLoader = (t: boolean) => {} }) => {
@@ -26,7 +28,7 @@ const Login = ({ setLoader = (t: boolean) => {} }) => {
 
     if (password.length < 8) {
       // setError("Password must be at least 8 characters");
-      showToast("Password must be at least 8 characters!!", "info");
+      showToast(INVALID_PASSWORD, "info");
       return;
     }
 
@@ -38,7 +40,7 @@ const Login = ({ setLoader = (t: boolean) => {} }) => {
     } else {
       if (credential.length <= 3) {
         // setError("Username must be greater than 3 characters");
-        showToast("Username must be greater than 3 characters!!", "info");
+        showToast(INVALID_USERNAME, "info");
         return;
       }
       formData.set("username", credential);
@@ -56,16 +58,15 @@ const Login = ({ setLoader = (t: boolean) => {} }) => {
         showToast(res.message as string, "error");
         console.log(res.message);
         if (res.message == undefined) {
-          showToast("Server not responding!!", "info");
+          showToast(SERVER_ERROR_MESSAGE, "info");
           return;
         }
       }
     } catch (error) {
       console.error("Login error:", error);
-      showToast("An error occurred during login.", "info");
-      // setError("An error occurred during login.");
+      showToast(LOGIN_ERROR_MESSAGE, "info"); 
     } finally {
-      setLoader(false); // Set loading state back to false
+      setLoader(false);
     }
   };
 
@@ -76,7 +77,7 @@ const Login = ({ setLoader = (t: boolean) => {} }) => {
     console.log(res);
     if (res.status_code !== 200) {
       if (res.message === undefined) {
-        showToast("Server not responding!!", "info");
+        showToast(SERVER_ERROR_MESSAGE, "info");
         setLoader(false);
         return;
       }
@@ -88,7 +89,7 @@ const Login = ({ setLoader = (t: boolean) => {} }) => {
       if (res.data.url) {
         window.location.href = res.data.url;
       } else {
-        showToast("Unknown Error Occured", "warn");
+        showToast(UNKNOWN_ERROR_MESSAGE, "warn");
         setLoader(false);
       }
       // setLoader(false);
@@ -103,6 +104,7 @@ const Login = ({ setLoader = (t: boolean) => {} }) => {
       setLoader(true);
     };
   }, []);
+
 
   return (
     <div className=" bg-[#11112B] rounded-2xl flex flex-col items-center justify-center p-4 m-auto w-80">

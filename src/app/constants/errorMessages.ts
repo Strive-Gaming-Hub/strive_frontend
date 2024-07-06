@@ -1,0 +1,11 @@
+export const LOGIN_ERROR_MESSAGE = "An error occurred during login.";
+export const SERVER_ERROR_MESSAGE = "Server not reponding!!";
+export const UNKNOWN_ERROR_MESSAGE = "Unknow error occurred!!";
+export const OTP_VERIFICATION_ERROR = "OTP  verification failed";
+export const INVALID_DOB="Please, Enter a valid DOB!!";
+export const INVALID_EMAIL="Please, Enter a valid Email!!"; 
+export const USER_UNDER_AGE="You must be at least 18 years old to register";
+export const INVALID_PASSWORD="Please, Enter a valid Password!!";
+export const INVALID_USERNAME="Please, Enter a valid username!!";
+export const INVALID_DATE="Day must be between 1 and 31";
+export const INVALID_MONTH="Month must be between 1 and 12";
