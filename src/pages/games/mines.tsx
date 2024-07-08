@@ -113,7 +113,7 @@ const Mines = ({ setLoader = (t: boolean) => {} }) => {
   }, []);
   return (
     <div className="flex" style={{ height: "calc(100vh - 4.5rem)" }}>
-      <div className="left text-white flex-col bg-[#1C1E29] h-full p-4 rounded-lg w-[25%]">
+      <div className="left text-white flex-col bg-[#1C1E29] h-full p-4 rounded-l-lg w-[25%]">
         <div id="mines-bet" className="flex flex-col mb-2">
           <label className="text-[#6F79A1] text-sm font-medium tracking-wide">
             Bet Amount
@@ -223,12 +223,12 @@ const Mines = ({ setLoader = (t: boolean) => {} }) => {
           )}
         </div>
       </div>
-      <div className="right text-white m-auto bg-[#0B0C13]">
+      <div className="right text-white bg-[#0B0C13] w-full  flex justify-center items-center ">
         <div className="grid grid-cols-5 gap-3">
           {gridItems.map((item, index) => (
             <div
               key={item}
-              className="w-20 h-20 duration-200 p-1 rounded-lg border-1 border-gray-800 flex items-center justify-center hover:scale-110 "
+              className="w-20 h-20 duration-200 p-1 rounded-lg border-1 border-gray-800 flex items-center justify-center hover:scale-110 cursor-pointer"
               onClick={() => handleClick(index)}
               //shadow only when not selected
               style={{
