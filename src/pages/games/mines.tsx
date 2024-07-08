@@ -112,7 +112,7 @@ const Mines = ({ setLoader = (t: boolean) => {} }) => {
     };
   }, []);
   return (
-    <div className="flex" style={{ height: "calc(100vh - 4.8rem)" }}>
+    <div className="flex" style={{ height: "calc(100vh - 4.5rem)" }}>
       <div className="left text-white flex-col bg-[#1C1E29] h-full p-4 rounded-lg w-[25%]">
         <div id="mines-bet" className="flex flex-col mb-2">
           <label className="text-[#6F79A1] text-sm font-medium tracking-wide">
