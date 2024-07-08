@@ -6,7 +6,10 @@ import { getUserSession } from "@/Auth/UserSession";
 const Mines = ({ setLoader = (t: boolean) => {} }) => {
   const gridItems = Array.from({ length: 25 }, (_, i) => i + 1);
 
-  const [gameactive, setGameactive] = useState(false);
+  const [gameactive, setGameactive] = useState(0);
+  // 0 -> game false
+  // 1 -> game true
+  // 2 -> game over
   const [amount, setAmount] = useState<number>(100);
   const total = 25;
   const [tnt, setTnt] = useState<any>(1);
@@ -48,15 +51,15 @@ const Mines = ({ setLoader = (t: boolean) => {} }) => {
     // console.log("board", board1);
 
     setBoard(board1);
-    setGameactive(true);
     showToast("Game started", "success");
     setGridColors(Array(25).fill("#373B4E"));
+    setGameactive(1);
   };
 
   const handleClick = (index: number) => {
     if (gridColors[index] !== "#373B4E") return; // If already clicked, do nothing
     console.log("board", board);
-    if (gameactive) {
+    if (gameactive === 1) {
       if (board[index]) {
         // console.log("TNT clicked", index);
         setGridColors((prev) => {
@@ -82,24 +85,25 @@ const Mines = ({ setLoader = (t: boolean) => {} }) => {
     }
   };
 
-
-
   const resetGame = () => {
-    setGameactive(false);
+    setGameactive(2);
     setAmount(100);
-    
     let tempGridColors = [...gridColors];
     for (let i = 0; i < 25; i++) {
       if (board[i]) {
         tempGridColors[i] = "red";
       }
-   }
+      //  else {
+      //   tempGridColors[i] = "green";
+      // }
+    }
     setGridColors(tempGridColors);
 
     setTimeout(() => {
       setBoard(Array(25).fill(false));
+      setGameactive(0);
       setGridColors(Array(25).fill("#373B4E"));
-    }, 500);
+    }, 1000);
   };
   useEffect(() => {
     setLoader(false);
@@ -108,9 +112,9 @@ const Mines = ({ setLoader = (t: boolean) => {} }) => {
     };
   }, []);
   return (
-    <div className="flex" style={{ height: "calc(100vh - 5.8rem)" }}>
+    <div className="flex" style={{ height: "calc(100vh - 4.8rem)" }}>
       <div className="left text-white flex-col bg-[#1C1E29] h-full p-4 rounded-lg w-[25%]">
-        <div className="flex flex-col mb-2">
+        <div id="mines-bet" className="flex flex-col mb-2">
           <label className="text-[#6F79A1] text-sm font-medium tracking-wide">
             Bet Amount
           </label>
@@ -119,6 +123,8 @@ const Mines = ({ setLoader = (t: boolean) => {} }) => {
               type="text"
               name="betamount"
               value={amount}
+              // when game starts, user can't change the amount
+              disabled={gameactive ? true : false}
               onChange={(e) =>
                 setAmount(
                   parseInt(e.target.value) ? parseInt(e.target.value) : 0
@@ -129,20 +135,23 @@ const Mines = ({ setLoader = (t: boolean) => {} }) => {
             />
             <div className="buttons flex gap-1">
               <button
+                disabled={gameactive ? true : false}
                 onClick={() => setAmount(amount * 0.5)}
-                className="h-[2.5rem] w-[2.5rem] bg-[#323547] rounded-md text-[0.75rem]"
+                className="h-[2.5rem] w-[2.5rem] bg-[#323547] rounded-md text-[0.75rem] border border-[#323547] hover:border-[#6F79A1]"
               >
                 1/2
               </button>
               <button
+                disabled={gameactive ? true : false}
                 onClick={() => setAmount(amount * 2)}
-                className="h-[2.5rem] w-[2.5rem] bg-[#323547] rounded-md text-[0.75rem]"
+                className="h-[2.5rem] w-[2.5rem] bg-[#323547] rounded-md text-[0.75rem] border border-[#323547] hover:border-[#6F79A1]"
               >
                 2x
               </button>
             </div>
           </div>
         </div>
+        {/* </div> */}
         <div className="flex gap-1">
           <div className="flex flex-col mb-2 w-1/2">
             <label className="text-[#6F79A1] text-sm font-medium tracking-wide">
@@ -152,6 +161,7 @@ const Mines = ({ setLoader = (t: boolean) => {} }) => {
               type="number"
               name="bomb"
               value={tnt}
+              disabled={gameactive ? true : false}
               onChange={(e) =>
                 setTnt(parseInt(e.target.value) ? parseInt(e.target.value) : 0)
               }
@@ -184,11 +194,11 @@ const Mines = ({ setLoader = (t: boolean) => {} }) => {
           />
         </div>
         <div className="relative flex flex-col gap-4 text-[0.9rem] font-medium">
-          {gameactive && (
+          {gameactive != 0 && (
             <button className="bg-[##1C1E29] border border-[#353849] rounded-md  py-[0.4rem] tracking-wide text-[#D0D6F5]">
               <span className="absolute left-8 top-2.5">
                 <MdCasino />
-              </span>{" "}
+              </span>
               Pick Random tile
             </button>
           )}
@@ -196,8 +206,8 @@ const Mines = ({ setLoader = (t: boolean) => {} }) => {
             <button
               className="bg-[#9562FF] border border-[#A77CFF] rounded-md py-[0.4rem] tracking-wide"
               onClick={() => {
-                console.log("Cashout");
-                setGameactive(false);
+                showToast("You cashed out", "success");
+                resetGame();
                 setAmount(100);
               }}
             >
@@ -213,14 +223,21 @@ const Mines = ({ setLoader = (t: boolean) => {} }) => {
           )}
         </div>
       </div>
-      <div className="right text-white m-auto">
-        <div className="grid grid-cols-5 gap-2.5">
+      <div className="right text-white m-auto bg-[#0B0C13]">
+        <div className="grid grid-cols-5 gap-3">
           {gridItems.map((item, index) => (
             <div
               key={item}
-              className="w-20 h-20 duration-200 rounded-lg border-1 border-gray-800 flex items-center justify-center shadow-2xl hover:bg-[#4C4C81] hover:scale-105"
+              className="w-20 h-20 duration-200 p-1 rounded-lg border-1 border-gray-800 flex items-center justify-center hover:scale-110 "
               onClick={() => handleClick(index)}
-              style={{ backgroundColor: gridColors[index] }}
+              //shadow only when not selected
+              style={{
+                backgroundColor: gridColors[index],
+                boxShadow:
+                  gridColors[index] === "#373B4E"
+                    ? "0 6px 0 0 #272A3C"
+                    : "none",
+              }}
             ></div>
           ))}
         </div>

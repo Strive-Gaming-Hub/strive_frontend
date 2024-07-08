@@ -2,9 +2,11 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { useAuth } from "@/app/Context/AuthContext";
 import { deleteUserSession, getUserSession } from "@/Auth/UserSession";
+import Logo from "@/app/logostrive.svg";
+import { SiGamedeveloper } from "react-icons/si";
+import Image from "next/image";
 
 const NavBar: React.FC = () => {
-
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   const { userData, refreshToken } = getUserSession();
@@ -23,19 +25,20 @@ const NavBar: React.FC = () => {
   };
 
   return (
-    <nav className="relative bg-[#090C23] p-4 w-full flex justify-between items-center">
+    <nav className="relative p-2 w-full flex justify-between items-center h-[9%]">
       <div className=" px-2 md:px-4 mx-auto w-full relative z-10 flex justify-between items-center">
         <div className="flex items-center">
           <div className="flex-shrink-0">
-            <Link href="/">
+            <Link href="/" className="flex">
+              <Image src={Logo} alt="logo" className="w-5 mr-2" />
               <span className="text-white text-xl font-bold cursor-pointer">
-                STRIVE
+                Strive
               </span>
             </Link>
           </div>
         </div>
 
-        <div className="flex pt-1 space-x-8">
+        <div className="flex h-[2.5rem] pt-1 space-x-8 text-[0.9rem] font-medium">
           {isAuthenticated && userData ? ( //checking the authentication with the refresh token
             <>
               <button
@@ -44,9 +47,7 @@ const NavBar: React.FC = () => {
               >
                 Logout
               </button>
-              <button
-                className="border border-[#FFFFFF] text-[#FFFFFF] text-1 px-4 py-2 rounded-xl mr-2"
-              >
+              <button className="border border-[#FFFFFF] text-[#FFFFFF] text-1 px-4 py-2 rounded-xl mr-2">
                 $1000.000
               </button>
               <button
@@ -58,7 +59,7 @@ const NavBar: React.FC = () => {
             </>
           ) : (
             <Link href="/login">
-              <button className="bg-[#9562FF] text-[#FFFFFF] text-1 px-4 py-2 rounded-xl">
+              <button className="bg-[#9562FF] text-[#FFFFFF] text-1 px-4 py-2 rounded-md">
                 Sign in
               </button>
             </Link>
