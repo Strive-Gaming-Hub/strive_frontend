@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { useAuth } from "@/app/Context/AuthContext";
 import { deleteUserSession, getUserSession } from "@/Auth/UserSession";
-import Logo from "@/app/logostrive.svg";
+import Logo from "@/app/logostrve.png";
 import { SiGamedeveloper } from "react-icons/si";
 import Image from "next/image";
 
@@ -30,10 +30,10 @@ const NavBar: React.FC = () => {
         <div className="flex items-center">
           <div className="flex-shrink-0">
             <Link href="/" className="flex">
-              <Image src={Logo} alt="logo" className="w-5 mr-2" />
-              <span className="text-white text-xl font-bold cursor-pointer">
+              <Image src={Logo} alt="logo" className="w-24" />
+              {/* <span className="text-white text-xl font-bold cursor-pointer">
                 Strive
-              </span>
+              </span> */}
             </Link>
           </div>
         </div>
@@ -59,7 +59,7 @@ const NavBar: React.FC = () => {
             </>
           ) : (
             <Link href="/login">
-              <button className="bg-[#9562FF] text-[#FFFFFF] text-1 px-4 py-2 rounded-md">
+              <button className="bg-[#9562FF] hover:bg-[#ae60fc] text-[#FFFFFF] text-1 px-4 py-2 rounded-md border border-[#a775ae]">
                 Sign in
               </button>
             </Link>
