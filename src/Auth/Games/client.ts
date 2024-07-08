@@ -1,3 +1,5 @@
+import { FAILED_TO_LOGIN } from "@/app/constants/errorMessages";
+import { showToast } from "@/app/notifier/toast";
 import axios, { AxiosError } from "axios";
 import Cookies from "js-cookie";
 
@@ -16,7 +18,7 @@ const refreshAccessToken = async (): Promise<string | null> => {
   if (!accessToken) {
     if (!refreshToken) {
       window.location.href = "/login"; // Redirect to login if no refresh token
-      throw new Error("No access token or refresh token available. Redirecting to login.");
+      showToast(FAILED_TO_LOGIN, "info");
     }
 
     try {

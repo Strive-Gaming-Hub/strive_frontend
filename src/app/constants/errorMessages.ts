@@ -9,3 +9,7 @@ export const INVALID_PASSWORD="Please, Enter a valid Password!!";
 export const INVALID_USERNAME="Please, Enter a valid username!!";
 export const INVALID_DATE="Day must be between 1 and 31";
 export const INVALID_MONTH="Month must be between 1 and 12";
+export const FAILED_TO_UPDATE_BALANCE="Failed to update balance";
+export const FAILED_TO_PROCESS_NEW_BET="Failed to process next bet";
+export const GAME_START_ERROR="Failed to start game";
+export const FAILED_TO_LOGIN="Session timed out";
