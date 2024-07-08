@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { useAuth } from "@/app/Context/AuthContext";
 import { deleteUserSession, getUserSession } from "@/Auth/UserSession";
-import userdata from "@/Pages/UserDataForm";
 
 const NavBar: React.FC = () => {
 

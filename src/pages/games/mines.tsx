@@ -38,10 +38,10 @@ const Mines = ({ setLoader = (t: boolean) => {} }) => {
     let temptnt = tnt;
     while (temptnt > 0) {
       const randomIndex = Math.floor(Math.random() * 25);
-      if (!board[randomIndex]) {
+      if (!board1[randomIndex]) {
         board1[randomIndex] = true;
         temptnt--;
-        // console.log("TNT", randomIndex);
+        console.log("TNT", randomIndex);
       }
     }
 
@@ -82,11 +82,24 @@ const Mines = ({ setLoader = (t: boolean) => {} }) => {
     }
   };
 
+
+
   const resetGame = () => {
     setGameactive(false);
     setAmount(100);
-    // setTnt(1);
-    setGridColors(Array(25).fill("#373B4E"));
+    
+    let tempGridColors = [...gridColors];
+    for (let i = 0; i < 25; i++) {
+      if (board[i]) {
+        tempGridColors[i] = "red";
+      }
+   }
+    setGridColors(tempGridColors);
+
+    setTimeout(() => {
+      setBoard(Array(25).fill(false));
+      setGridColors(Array(25).fill("#373B4E"));
+    }, 500);
   };
   useEffect(() => {
     setLoader(false);
@@ -183,8 +196,9 @@ const Mines = ({ setLoader = (t: boolean) => {} }) => {
             <button
               className="bg-[#9562FF] border border-[#A77CFF] rounded-md py-[0.4rem] tracking-wide"
               onClick={() => {
+                console.log("Cashout");
                 setGameactive(false);
-                setAmount(0);
+                setAmount(100);
               }}
             >
               Cashout
@@ -204,7 +218,7 @@ const Mines = ({ setLoader = (t: boolean) => {} }) => {
           {gridItems.map((item, index) => (
             <div
               key={item}
-              className="w-20 h-20 rounded-lg border-1 border-gray-800 flex items-center justify-center shadow-2xl hover:bg-[#4C4C81] hover:scale-105"
+              className="w-20 h-20 duration-200 rounded-lg border-1 border-gray-800 flex items-center justify-center shadow-2xl hover:bg-[#4C4C81] hover:scale-105"
               onClick={() => handleClick(index)}
               style={{ backgroundColor: gridColors[index] }}
             ></div>
