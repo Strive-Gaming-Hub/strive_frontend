@@ -98,18 +98,19 @@ const Register = ({ setLoader = (t: boolean) => {} }) => {
       return;
     }
 
-    const phone = ((formData.get("phonecode") as string) +
-      formData.get("phone")) as string;
+    const phone = ((formData.get("phonecode") as string).trim() +
+      formData.get("phone")).trim() as string;
     const date = `${formData.get("year")}-${formData.get(
       "month"
     )}-${formData.get("date")}`;
     console.log(date);
     formData.set("phone", phone);
-    formData.set("date", date);
+   
     formData.delete("year");
     formData.delete("month");
     formData.delete("date");
     formData.delete("phonecode");
+    formData.set("dob", date);
 
     const res = await registerUser(formData);
     console.log(res);
