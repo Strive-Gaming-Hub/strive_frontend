@@ -4,7 +4,6 @@ import { useAuth } from "@/app/Context/AuthContext";
 import { deleteUserSession, getUserSession } from "@/Auth/UserSession";
 
 const NavBar: React.FC = () => {
-
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   const { userData, refreshToken } = getUserSession();
@@ -23,7 +22,7 @@ const NavBar: React.FC = () => {
   };
 
   return (
-    <nav className="relative bg-[#090C23] p-4 w-full flex justify-between items-center">
+    <nav className="relative p-2 w-full flex justify-between items-center h-[9%]">
       <div className=" px-2 md:px-4 mx-auto w-full relative z-10 flex justify-between items-center">
         <div className="flex items-center">
           <div className="flex-shrink-0">
@@ -44,9 +43,7 @@ const NavBar: React.FC = () => {
               >
                 Logout
               </button>
-              <button
-                className="border border-[#FFFFFF] text-[#FFFFFF] text-1 px-4 py-2 rounded-xl mr-2"
-              >
+              <button className="border border-[#FFFFFF] text-[#FFFFFF] text-1 px-4 py-2 rounded-xl mr-2">
                 $1000.000
               </button>
               <button
