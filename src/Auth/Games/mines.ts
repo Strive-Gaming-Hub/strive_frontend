@@ -1,6 +1,10 @@
 import { showToast } from "@/app/notifier/toast";
 import { api } from "../client";
 import axios from "axios";
+import { FAILED_TO_PROCESS_NEW_BET, FAILED_TO_UPDATE_BALANCE, GAME_START_ERROR } from "@/app/constants/errorMessages";
+
+
+
 
 //function to check the game status and decide whether we are on a new game or a game is already in progress
 let gameStatus: "active" | "new_game" | null = null; // Initial game status
@@ -21,7 +25,7 @@ export const isActiveMinesGame = async (): Promise<void> => {
     }
   } catch (error) {
     console.error("Error checking Mines game status:", error);
-    throw new Error("Failed to check Mines game status.");
+    showToast("Failed to check Mines game status.");
   }
 };
 
@@ -29,6 +33,7 @@ export const isActiveMinesGame = async (): Promise<void> => {
 export const getMinesGameStatus = (): "active" | "new_game" | null => {
   return gameStatus;
 };
+
 
 
 
@@ -44,40 +49,44 @@ export const handlePlayButtonClick = async () => {
 
       // Additional logic to handle new game start
     } else if (gameStatus === "active") {
-      throw new Error("Game is already active");
+      showToast("Game is already active");
     } else {
-      throw new Error("Unknown game status");
+      showToast("Unknown game status");
     }
   } catch (error: any) {
     console.error("Error handling play button click:", error);
-    showToast(error.message || "Failed to start game", "error");
+    showToast(error.message || GAME_START_ERROR, "error");
   }
 };
 
 
 
+
+//Function to handle the next bet, fetches data from the server that if the next bet is going to be
+//a success or failure.
 export const next_bet = async (tileIndex: number) => {
+  try {
+    const response = await axios.post("backend-api-url", { tileIndex });
+
+    //fetches the response for the tile (whether it is a mine or a diamond)
+    const data = response.data;
+
+    console.log("Next bet response:", data);
+  } catch (error) {
+    console.error("Error in next_bet:", error);
+    showToast(FAILED_TO_PROCESS_NEW_BET, "error");
+  }
+};
+
+
+
+//Function to handle the cashout service
+export const Cashout = async (): Promise<void> => {
     try {
-      const response = await axios.get(`/api/mines/tile/${tileIndex}`); // Replace with your backend API endpoint
-  
-      if (response.status === 200) {
-        const result = response.data;
-  
-        if (result.hasMine) {
-          showToast("This tile has a mine!", "error");
-          // Handle logic for a tile with a mine
-        } else if (result.hasDiamond) {
-          showToast("Congratulations! You found a diamond!", "success");
-          // Handle logic for a tile with a diamond
-        } else {
-          showToast("No mine or diamond found on this tile.", "info");
-          // Handle logic for a tile with neither mine nor diamond
-        }
-      } else {
-        throw new Error("Failed to fetch tile information."); // Handle unexpected response status
-      }
+      const response = await axios.post("/cashout/mines", {
+      });
     } catch (error) {
-      console.error("Error fetching tile information:", error);
-      showToast("Failed to fetch tile information.", "error"); // Display error message to the user
+      console.error("Error updating balance:", error);
+      showToast(FAILED_TO_UPDATE_BALANCE, "error");
     }
   };
