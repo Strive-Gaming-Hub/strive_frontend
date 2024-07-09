@@ -17,7 +17,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         <SideBar />
 
         <div
-          className="flex flex-col flex-1 gap-2 overflow-y-auto bg-[#12141C] p-4 rounded-xl"
+          className="flex flex-col flex-1 gap-2 overflow-y-auto  p-2 rounded-xl"
           style={{ height: "calc(100vh - 4.5rem)" }}
         >
           {children}

@@ -41,5 +41,7 @@ export const deleteUserSession = () =>{
     localStorage.removeItem("userData");
     Cookies.remove("accessToken");
     Cookies.remove("refreshToken");
+    
+    
     return true;
 }
