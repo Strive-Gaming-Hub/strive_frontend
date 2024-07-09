@@ -33,7 +33,7 @@ const Sidebar = () => {
   return (
     <div
       className="relative bg-[#12141C] text-[#6F79A1] text-[0.87rem] font-medium w-full rounded-xl md:w-[19%] flex flex-col p-4"
-      style={{ height: "calc(100vh - 4.8rem)" }}
+      style={{ height: "calc(100vh - 4.5rem)" }}
     >
       {/* Profile section */}
       <div
@@ -56,7 +56,7 @@ const Sidebar = () => {
 
       {/* Dropdown content */}
       {isDropdownOpen && (
-        <div className="absolute left-full top-1 bg-[#11112B] m-2 text-[0.87rem] font-medium rounded-md w-40 z-30">
+        <div className="absolute left-full top-1 bg-[#12141C] m-2 text-[0.87rem] font-medium rounded-md w-40 z-30">
           <ul className="p-1">
             <li className="flex items-center px-2 py-2 cursor-pointer text-[#FFFFFF] text-1 hover:bg-[#1F1943] hover:text-[#FFFFFF] rounded-[4px]">
               <Link href="/profile" className="flex items-center">
