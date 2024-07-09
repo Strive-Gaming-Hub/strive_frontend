@@ -28,8 +28,8 @@ const NavBar: React.FC = () => {
     <nav className="relative p-2 w-full flex justify-between items-center h-[9%]">
       <div className=" px-2 md:px-4 mx-auto w-full relative z-10 flex justify-between items-center">
         <div className="flex items-center">
-          <div className="flex-shrink-0">
-            <Link href="/" className="flex">
+          <div className="flex-shrink-0 items-center">
+            <Link href="/">
               <Image src={Logo} alt="logo" className="w-24" />
               {/* <span className="text-white text-xl font-bold cursor-pointer">
                 Strive
