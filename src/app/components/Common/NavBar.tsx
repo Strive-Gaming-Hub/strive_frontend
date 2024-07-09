@@ -8,19 +8,18 @@ import Image from "next/image";
 
 const NavBar: React.FC = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-
-  const { userData, refreshToken } = getUserSession();
+  
+  const { userData,refreshToken } = useAuth();
 
   useEffect(() => {
     if (userData && refreshToken) {
       setIsAuthenticated(true);
-      // setUsername(userData.username);
     }
-  }, []);
+  }, [userData]);
 
   const handleLogout = () => {
     deleteUserSession();
-    window.location.href = "/";
+    window.location.reload();
     setIsAuthenticated(false);
   };
 
