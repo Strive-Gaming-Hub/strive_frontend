@@ -77,6 +77,8 @@ const Mines = ({ setLoader = (t: boolean) => {} }) => {
         setGridColors((prev) => {
           const newColors = [...prev];
           newColors[index] = "green";
+          // if number of greeen grid equal to coin restart the game
+          
           return newColors;
         });
       }
@@ -195,11 +197,11 @@ const Mines = ({ setLoader = (t: boolean) => {} }) => {
         </div>
         <div className="relative flex flex-col gap-4 text-[0.9rem] font-medium">
           {gameactive != 0 && (
-            <button className="bg-[##1C1E29] border border-[#353849] rounded-md  py-[0.4rem] tracking-wide text-[#D0D6F5]">
-              <span className="absolute left-8 top-2.5">
-                <MdCasino />
+            <button className="flex justify-center items-center bg-[##1C1E29] border border-[#353849] rounded-md  py-[0.4rem] tracking-wide text-[#D0D6F5]">
+              <span>
+                <MdCasino className="mr-2" />
               </span>
-              Pick Random tile
+              <span>Pick Random tile</span>
             </button>
           )}
           {gameactive ? (
@@ -223,12 +225,12 @@ const Mines = ({ setLoader = (t: boolean) => {} }) => {
           )}
         </div>
       </div>
-      <div className="right text-white bg-[#0B0C13] w-full  flex justify-center items-center ">
+      <div className="right text-white bg-[#0B0C13] w-full flex justify-center items-center ">
         <div className="grid grid-cols-5 gap-3">
           {gridItems.map((item, index) => (
             <div
               key={item}
-              className="w-20 h-20 duration-200 p-1 rounded-lg border-1 border-gray-800 flex items-center justify-center hover:scale-110 cursor-pointer"
+              className="w-[5rem] h-[5rem] duration-200 p-1 rounded-lg border-1 border-gray-800 flex items-center justify-center hover:scale-110 cursor-pointer"
               onClick={() => handleClick(index)}
               //shadow only when not selected
               style={{
