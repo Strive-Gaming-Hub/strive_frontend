@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { useAuth } from "@/app/Context/AuthContext";
 import { deleteUserSession, getUserSession } from "@/Auth/UserSession";
-import Logo from "@/app/assets/logostrive.png";
+import Logo from "@/app/assets/logo/logostrive.png";
 import { SiGamedeveloper } from "react-icons/si";
 import Image from "next/image";
 
