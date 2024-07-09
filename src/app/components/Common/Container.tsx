@@ -1,30 +1,51 @@
 import React from 'react';
+import Image from "next/image";
+import landingPagePoster from '../../../app/assets/landingPagePoster.png';
+import mines from '../../../app/assets/mines.png';
+import nimo from '../../../app/assets/nimo.png';
+import crash from '../../../app/assets/crash.png';
+import dicey from '../../../app/assets/dicey.png';
+import Link from 'next/link';
 
 interface ContainerProps {
   title?: string;
   height?: string;
+  width?: string;
   content?: string;
   showStories?: boolean;
   showGames?: boolean;
+  imageUrl?: string; // updated prop name
+  style?: React.CSSProperties;
 }
 
 const Container: React.FC<ContainerProps> = ({
   title = "",
   height = "auto",
+  width = "auto",
   content = "",
   showStories = false,
-  showGames = false
+  showGames = false,
+  imageUrl = "",
+  style ={},
 }) => {
+  const gameImages = [
+    {src:mines, link: "/games/mines"},
+    {src:nimo, link:"/games/nimo"},
+    {src:crash, link:"/games/crash"},
+    {src:dicey, link:"/games/dicey"}
+  ];
+
   return (
-    <div className="bg-[#11112B] rounded-xl p-4" style={{ height }}>
-      <h2 className="text-white text-lg font-bold mb-2">{title}</h2>
+    <div className="rounded-xl p-1 " style={{ ...style, height, width }}>
+      <h2 className="text-white text-lg font-bold">{title}</h2>
+      {imageUrl && <Image src={landingPagePoster} alt="logo" className="" />}
       <p className="text-white mb-4">{content}</p>
       {showStories && (
-        <div className="flex gap-2 mt-2">
+        <div className="flex gap-2 mt-2 ">
           {[...Array(10)].map((_, index) => (
             <div 
             key={index} 
-            className="h-[100px] w-[100px] bg-[#11112B] rounded-full border-2 border-[#9562FF] flex items-center justify-center"
+            className="h-23 w-23 bg-[#11112B] rounded-full border-2 border-[#9562FF] flex items-center justify-center"
           >
               <div
                 key={index}
@@ -39,11 +60,21 @@ const Container: React.FC<ContainerProps> = ({
       )}
       {showGames && (
         <div className="flex gap-2 mt-2">
-          {[...Array(5)].map((_, index) => (
-            <div key={index} className="h-[261px] w-[201px] bg-[#34374E] rounded-lg m-1"></div>
-          ))}
-        </div>
-      )}
+        {gameImages.map((game, index) => (
+          <Link href={game.link} key={index}>
+            <div className="relative h-60 w-60 bg-[#34374E] rounded-lg m-1 cursor-pointer">
+              <Image
+                src={game.src}
+                alt={`Game ${index + 1}`}
+                layout="fill"
+                objectFit="cover"
+                className="rounded-lg"
+              />
+            </div>
+          </Link>
+        ))}
+      </div>
+    )}
     </div>
   );
 };

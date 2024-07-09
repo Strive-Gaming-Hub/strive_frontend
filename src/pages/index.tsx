@@ -1,5 +1,6 @@
 import Container from "@/app/components/Common/Container";
 import React, { useEffect } from "react";
+
 export default function Home({ setLoader = (t: boolean) => {} }) {
   useEffect(() => {
     setLoader(false);
@@ -7,17 +8,22 @@ export default function Home({ setLoader = (t: boolean) => {} }) {
       setLoader(true);
     };
   }, []);
+  
   return (
     <>
       <Container
-        height="6.5rem"
-        title="First Container"
-        content="Content for the first container goes here..."
+        height="16rem"
+        width="100%"
+        imageUrl="/landingPagePoster.png" // updated prop name
+        
       />
       <Container
-        height="100%"
-        title="Second Container"
-        content="Content for the second container goes here..."
+        height="32rem"
+        width="100%"
+        title="Games For You"
+        //content="Content for the second container goes here..."
+        showGames={true}
+        style={{backgroundColor:'#12141C'}}
       />
     </>
   );

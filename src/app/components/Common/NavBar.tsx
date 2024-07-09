@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { useAuth } from "@/app/Context/AuthContext";
 import { deleteUserSession, getUserSession } from "@/Auth/UserSession";
-import Logo from "@/app/logostrve.png";
+import Logo from "@/app/assets/logostrive.png";
 import { SiGamedeveloper } from "react-icons/si";
 import Image from "next/image";
 
@@ -20,13 +20,13 @@ const NavBar: React.FC = () => {
 
   const handleLogout = () => {
     deleteUserSession();
-    window.location.reload();
+    window.location.href = "/";
     setIsAuthenticated(false);
   };
 
   return (
     <nav className="relative p-2 w-full flex justify-between items-center h-[9%]">
-      <div className=" px-2 md:px-4 mx-auto w-full relative z-10 flex justify-between items-center">
+      <div className="px-2 md:px-4 mx-auto w-full relative z-10 flex justify-between items-center">
         <div className="flex items-center">
           <div className="flex-shrink-0 items-center">
             <Link href="/">
@@ -58,11 +58,18 @@ const NavBar: React.FC = () => {
               </button>
             </>
           ) : (
-            <Link href="/login">
-              <button className="bg-[#9562FF] hover:bg-[#ae60fc] text-[#FFFFFF] text-1 px-4 py-2 rounded-md border border-[#a775ae]">
-                Sign in
-              </button>
-            </Link>
+            <>
+              <Link href="/login">
+                <button className=" text-[#FFFFFF] text-1 px-4 py-2 rounded-lg border border-[#353849]">
+                  Sign in
+                </button>
+              </Link>
+              <Link href="/register">
+                <button className="bg-[#9562FF] hover:bg-[#ae60fc] text-[#FFFFFF] text-1 px-2 py-2 rounded-lg border border-[#a775ae]">
+                  Register
+                </button>
+              </Link>
+            </>
           )}
         </div>
       </div>
