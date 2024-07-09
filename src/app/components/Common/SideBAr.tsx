@@ -12,19 +12,29 @@ import { HiCubeTransparent } from "react-icons/hi";
 import { IoMdSettings } from "react-icons/io";
 import { CgProfile } from "react-icons/cg";
 import { BiSupport } from "react-icons/bi";
+import { useAuth } from "@/app/Context/AuthContext";
 
 const Sidebar = () => {
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const [username, setUsername] = useState<string>("");
+  const { userData } = useAuth();
 
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      const { userData } = getUserSession();
-      if (userData && userData.username) {
-        setUsername(userData.username);
-      }
+    if (userData) {
+      setUsername(userData.username);
     }
-  }, []);
+  }, [userData]);
+  
+
+
+  // useEffect(() => {
+  //   if (typeof window !== "undefined") {
+  //     const { userData } = getUserSession();
+  //     if (userData && userData.username) {
+  //       setUsername(userData.username);
+  //     }
+  //   }
+  // }, []);
 
   const toggleDropdown = () => {
     setDropdownOpen(!isDropdownOpen);

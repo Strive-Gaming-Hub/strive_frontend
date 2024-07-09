@@ -17,9 +17,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [userData, setUserData] = useState<any>();
 
   useEffect(() => {
-    // Check if user is already logged in
+    // Check if user is already logged in and parse user data
+
     const userData = localStorage.getItem("userData");
-    // parse json data
     const parsedUserData = userData? JSON.parse(userData) : null;
 
     // Check if refresh token is stored in cookies
