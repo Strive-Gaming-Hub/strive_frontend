@@ -37,7 +37,7 @@ const Container: React.FC<ContainerProps> = ({
 
   return (
     <div className="rounded-xl p-1 " style={{ ...style, height, width }}>
-      <h2 className="text-white text-lg font-bold mb-2">{title}</h2>
+      <h2 className="text-white text-lg font-bold">{title}</h2>
       {imageUrl && <Image src={landingPagePoster} alt="logo" className="" />}
       <p className="text-white mb-4">{content}</p>
       {showStories && (
