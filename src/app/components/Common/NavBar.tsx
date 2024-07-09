@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { useAuth } from "@/app/Context/AuthContext";
 import { deleteUserSession, getUserSession } from "@/Auth/UserSession";
-import Logo from "@/app/assets/logostrive.png";
+import Logo from "@/app/assets/logo/logostrive.png";
 import { SiGamedeveloper } from "react-icons/si";
 import Image from "next/image";
 import Modal from "./Modal";
@@ -11,8 +11,8 @@ import Register from "../register";
 
 const NavBar: React.FC = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-
-  const { userData, refreshToken } = getUserSession();
+  
+  const { userData,refreshToken } = useAuth();
 
   const openLoginModal = () => {
     const modal = document.getElementById("login_modal") as HTMLDialogElement;
@@ -28,13 +28,12 @@ const NavBar: React.FC = () => {
   useEffect(() => {
     if (userData && refreshToken) {
       setIsAuthenticated(true);
-      // setUsername(userData.username);
     }
-  }, []);
+  }, [userData]);
 
   const handleLogout = () => {
     deleteUserSession();
-    window.location.href = "/";
+    window.location.reload();
     setIsAuthenticated(false);
   };
 

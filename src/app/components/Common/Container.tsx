@@ -1,10 +1,10 @@
 import React from 'react';
 import Image from "next/image";
-import landingPagePoster from '../../../app/assets/landingPagePoster.png';
-import mines from '../../../app/assets/mines.png';
-import nimo from '../../../app/assets/nimo.png';
-import crash from '../../../app/assets/crash.png';
-import dicey from '../../../app/assets/dicey.png';
+import landingPagePoster from '../../../app/assets/landingPagePoster/landingPagePoster.png';
+import mines from '../../../app/assets/games/mines.png';
+import nimo from '../../../app/assets/games/nimo.png';
+import crash from '../../../app/assets/games/crash.png';
+import dicey from '../../../app/assets/games/dicey.png';
 import Link from 'next/link';
 
 interface ContainerProps {
