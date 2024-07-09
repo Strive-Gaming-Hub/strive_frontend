@@ -1,14 +1,19 @@
 import React from "react";
 import NavBar from "../Common/NavBar";
 import SideBar from "../Common/SideBAr";
+import Login from "../login";
+import Register from "../register";
 
 interface LayoutProps {
   children: React.ReactNode;
+  setLoader: (t:boolean)=>void;
 }
 
-const Layout: React.FC<LayoutProps> = ({ children }) => {
+const Layout: React.FC<LayoutProps> = ({ children, setLoader }) => {
   return (
     <div className="bg-[#0E1016] flex flex-col">
+      <Login setLoader={setLoader} />
+      <Register setLoader={setLoader}/>
       <div className="flex-none">
         <NavBar />
       </div>
@@ -22,7 +27,8 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         >
           {children}
         </div>
-      </div>
+      </div> 
+      
     </div>
   );
 };

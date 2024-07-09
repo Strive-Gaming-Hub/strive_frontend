@@ -1,18 +1,17 @@
 import React, { useState, FormEvent, useEffect } from "react";
-import "../app/globals.css";
 import { IoClose } from "react-icons/io5";
-import { handleSendOtp, handleVerifyOtp, registerUser } from "../Auth/Register";
+import { handleSendOtp, handleVerifyOtp, registerUser } from "@/Auth/Register";
 import { showToast } from "@/app/notifier/toast";
 import { getGoogleAuthUrl } from "@/Auth/GoogleAuth";
 import { INVALID_DATE, INVALID_DOB, INVALID_MONTH, OTP_VERIFICATION_ERROR, SERVER_ERROR_MESSAGE, UNKNOWN_ERROR_MESSAGE, USER_UNDER_AGE } from "@/app/constants/errorMessages";
+import Modal from "./Common/Modal";
 
 const Register = ({ setLoader = (t: boolean) => {} }) => {
   const [showOtp, setShowOtp] = useState(false);
   const [otp, setOtp] = useState("");
   const [name, setName] = useState("");
   const [pop, setPop] = useState(true);
-  {
-  }
+
 
   const handleOTP = async (otp: string) => {
     setLoader(true);
@@ -175,22 +174,16 @@ const Register = ({ setLoader = (t: boolean) => {} }) => {
     };
   }, []);
 
-  return !showOtp ? (
-    <div className="m-auto bg-[#11112B] rounded-2xl items-center justify-center w-80 p-8  ">
-      <form
+  return ( 
+  <Modal title="Create an account" id="register_modal">
+  <div className="m-auto bg-[#11112B] rounded-2xl items-center justify-center w-80 p-4  ">
+      {!showOtp ? (
+      <>
+        <form
         className="relative rounded"
         id="registerform"
         onSubmit={handleRegister}
       >
-        <h2 className="text-[1.25rem] mb-1 text-center font-medium text-[#FFFFFF] leading-[30px]">
-          Create an account
-        </h2>
-        <div className="absolute top-[-1rem] right-[-1rem]">
-          <IoClose
-            onClick={() => setPop(!pop)}
-            className="text-[#8E84A3] font-bold text-lg hover:scale-x-125 cursor-pointer"
-          />
-        </div>
         <div className="mb-1">
           <label className="text-[#FFFFFF] text-sm font-medium mb-2">
             Email
@@ -300,20 +293,19 @@ const Register = ({ setLoader = (t: boolean) => {} }) => {
         <p className="text-[#3f3f6a] text-[0.8rem] font-medium py-2 w-fit m-auto">
           OR
         </p>
-      </form>
-      <div className="flex items-center justify-between">
-        <button
-          type="button"
-          onClick={handleGoogleRegister}
-          className="border-2 border-solid border-[#3e3e6a] text-white font-medium text-[1rem] w-full py-2 px-4 rounded-[0.625rem]"
-        >
-          Continue with Google
-        </button>
-      </div>
-    </div>
+        </form>
+        <div className="flex items-center justify-between">
+            <button
+            type="button"
+            onClick={handleGoogleRegister}
+            className="border-2 border-solid border-[#3e3e6a] text-white font-medium text-[1rem] w-full py-2 px-4 rounded-[0.625rem]"
+            >
+            Continue with Google
+            </button>
+        </div>
+      </>
   ) : (
-    <div className="m-auto h-fit bg-[#11112B] rounded-2xl flex items-center justify-center">
-      <div className="relative rounded m-[2rem]">
+      <div className="relative rounded ">
         <h2 className="text-[1.25rem] mb-1 text-center font-medium text-[#FFFFFF] leading-[30px]">
           Verify OTP
         </h2>
@@ -339,8 +331,10 @@ const Register = ({ setLoader = (t: boolean) => {} }) => {
             Verify OTP
           </button>
         </div>
-      </div>
-    </div>
+      </div>)
+      }
+        </div>
+    </Modal>
   );
 };
 

@@ -36,12 +36,12 @@ const Container: React.FC<ContainerProps> = ({
   ];
 
   return (
-    <div className="rounded-xl p-1 " style={{ ...style, height, width }}>
-      <h2 className="text-white text-lg font-bold">{title}</h2>
-      {imageUrl && <Image src={landingPagePoster} alt="logo" className="" />}
-      <p className="text-white mb-4">{content}</p>
+    <div className="rounded-xl p-1 mt-[-0.75rem] " style={{ ...style, height, width }}>
+      <h2 className="text-white text-lg font-bold ">{title}</h2>
+      {imageUrl && <Image src={landingPagePoster} alt="logo"  />}
+      <p className="text-white">{content}</p>
       {showStories && (
-        <div className="flex gap-2 mt-2 ">
+        <div className="flex flex-row justify-around gap-2 mt-2 ">
           {[...Array(10)].map((_, index) => (
             <div 
             key={index} 
@@ -59,7 +59,7 @@ const Container: React.FC<ContainerProps> = ({
         </div>
       )}
       {showGames && (
-        <div className="flex gap-2 mt-2">
+        <div className="flex flex-row justify-around gap-2 mt-2">
         {gameImages.map((game, index) => (
           <Link href={game.link} key={index}>
             <div className="relative h-60 w-60 bg-[#34374E] rounded-lg m-1 cursor-pointer">

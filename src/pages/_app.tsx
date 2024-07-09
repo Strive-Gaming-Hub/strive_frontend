@@ -23,7 +23,7 @@ export default function App({ Component, pageProps }: AppProps) {
     <AuthProvider>
       <div className={`min-h-screen w-full font-rubik ${rubik.variable}`}>
         {loader && <Loader />}
-        <Layout>
+        <Layout setLoader={setLoader}>
           <Component {...pageProps} setLoader={setLoader} />
         </Layout>
         <ToastContainer
@@ -33,17 +33,6 @@ export default function App({ Component, pageProps }: AppProps) {
           autoClose={1000}
           style={{ fontSize: "14px" }}
         />
-        {/* <div className={`min-h-screen w-full font-rubik ${rubik.variable}`}>
-          {shouldRenderSidebar && <Layout />}
-          {loader && <Loader />}
-          <Component {...pageProps} setLoader={setLoader} />
-          <ToastContainer
-            theme="dark"
-            closeOnClick
-            hideProgressBar
-            style={{ fontSize: "14px" }}
-          />
-        </div> */}
       </div>
     </AuthProvider>
   );

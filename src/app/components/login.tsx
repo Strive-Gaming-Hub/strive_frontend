@@ -1,11 +1,11 @@
 import React, { useEffect } from "react";
-import "../app/globals.css";
 import { IoClose } from "react-icons/io5";
 import { striveLogin } from "@/Auth/Login";
 import { showToast } from "@/app/notifier/toast";
 import Link from "next/link";
 import { getGoogleAuthUrl } from "@/Auth/GoogleAuth";
 import { INVALID_PASSWORD, INVALID_USERNAME, LOGIN_ERROR_MESSAGE , SERVER_ERROR_MESSAGE, UNKNOWN_ERROR_MESSAGE } from "@/app/constants/errorMessages";
+import Modal from "./Common/Modal";
 
 
 
@@ -107,18 +107,13 @@ const Login = ({ setLoader = (t: boolean) => {} }) => {
 
 
   return (
+    <Modal title="Sign in" id="login_modal">
     <div className=" bg-[#11112B] rounded-2xl flex flex-col items-center justify-center p-4 m-auto w-80">
       <form
         className="w-full relative rounded"
         id="login"
         onSubmit={handleLogin}
       >
-        <h2 className="text-[1.25rem] mb-1 text-center font-medium text-[#FFFFFF] leading-[30px]">
-          Sign in
-        </h2>
-        <div className="absolute top-[0.5rem] right-[0.5rem]">
-          <IoClose className="text-[#8E84A3] font-bold text-lg hover:scale-125 hover:cursor-pointer" />
-        </div>
         <div className="mb-4">
           <label className="text-[#FFFFFF] text-sm font-medium mb-2">
             Email/username
@@ -180,6 +175,7 @@ const Login = ({ setLoader = (t: boolean) => {} }) => {
         </p>
       )}
     </div>
+    </Modal>
   );
 };
 

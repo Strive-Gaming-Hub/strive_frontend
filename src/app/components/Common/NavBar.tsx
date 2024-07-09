@@ -5,11 +5,25 @@ import { deleteUserSession, getUserSession } from "@/Auth/UserSession";
 import Logo from "@/app/assets/logostrive.png";
 import { SiGamedeveloper } from "react-icons/si";
 import Image from "next/image";
+import Modal from "./Modal";
+import Login from "../login";
+import Register from "../register";
 
 const NavBar: React.FC = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   const { userData, refreshToken } = getUserSession();
+
+  const openLoginModal = () => {
+    const modal = document.getElementById("login_modal") as HTMLDialogElement;
+    modal?.showModal();
+  }
+
+  const openRegisterModal = () => {
+    const modal = document.getElementById("register_modal") as HTMLDialogElement;
+    modal?.showModal();
+  }
+
 
   useEffect(() => {
     if (userData && refreshToken) {
@@ -59,20 +73,26 @@ const NavBar: React.FC = () => {
             </>
           ) : (
             <>
-              <Link href="/login">
-                <button className=" text-[#FFFFFF] text-1 px-4 py-2 rounded-lg border border-[#353849]">
+              {/* <Link href="/login"> */}
+                <button className=" text-[#FFFFFF] text-1 px-4 py-2 rounded-lg border border-[#353849]"
+                  onClick={openLoginModal}
+                >
                   Sign in
                 </button>
-              </Link>
-              <Link href="/register">
-                <button className="bg-[#9562FF] hover:bg-[#ae60fc] text-[#FFFFFF] text-1 px-2 py-2 rounded-lg border border-[#a775ae]">
+              {/* </Link> */}
+              {/* <Link href="/register"> */}
+                <button className="bg-[#9562FF] hover:bg-[#ae60fc] text-[#FFFFFF] text-1 px-2 py-2 rounded-lg border border-[#a775ae]"
+                  onClick={openRegisterModal}
+                >
+
                   Register
                 </button>
-              </Link>
+              {/* </Link> */}
             </>
           )}
         </div>
       </div>
+      
     </nav>
   );
 };
