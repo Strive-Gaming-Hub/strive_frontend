@@ -20,7 +20,7 @@ const NavBar: React.FC = () => {
 
   const handleLogout = () => {
     deleteUserSession();
-    window.location.reload();
+    window.location.href = "/";
     setIsAuthenticated(false);
   };
 

@@ -52,7 +52,7 @@ const Login = ({ setLoader = (t: boolean) => {} }) => {
       const res = await striveLogin(formData);
       if (res.status_code === 200) {
         showToast("Login successful", "success");
-        window.location.href = "/";
+        window.location.href = "/home";
       } else {
         // setError(res.message);
         showToast(res.message as string, "error");
