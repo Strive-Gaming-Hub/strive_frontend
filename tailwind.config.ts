@@ -17,7 +17,8 @@ const config: Config = {
         rubik: ["var(--font-rubik)"],
       },
       spacing: {
-        '21': '5.60rem'
+        '21': '5.20rem',
+        '23': '5.60rem'
       },
     },
   },
