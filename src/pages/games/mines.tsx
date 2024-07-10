@@ -120,8 +120,7 @@ const Mines = ({ setLoader = (t: boolean) => {} }) => {
 
   return (
     <div className="flex" style={{ height: "calc(100vh - 4.5rem)" }}>
-      
-      <div className=" text-white flex-col bg-[#1C1E29] h-full p-2 rounded-l-lg w-1/3">
+      <div className=" text-white flex-col bg-[#1C1E29] h-full p-2 rounded-l-lg w-1/4">
         <div className="buttons flex justify-around bg-[#0B0C13] p-1 mb-1 rounded-md">
           <button
             onClick={() => setAuto(!auto)}
@@ -135,7 +134,7 @@ const Mines = ({ setLoader = (t: boolean) => {} }) => {
           <button
             onClick={() => setAuto(!auto)}
             className={`flex justify-center duration-1000 rounded-md px-6 py-1 text-[0.8rem] font-medium border border-[#0b0c13] hover:border-[#b5a9a9]
-            ${ auto ? "bg-[#1F2230] text-[#F5F0FF]" : " text-slate-500" } 
+            ${auto ? "bg-[#1F2230] text-[#F5F0FF]" : " text-slate-500"} 
               `}
             // className="flex justify-center rounded-md px-6 py-1 border border-[#0b0c13] hover:border-[#b5a9a9]"
           >
@@ -143,48 +142,160 @@ const Mines = ({ setLoader = (t: boolean) => {} }) => {
           </button>
         </div>
         <form id="minesform" onSubmit={(e) => e.preventDefault()}>
-        {!auto ? (
-          <>
-            <div id="mines-bet" className="flex flex-col pt-1">
-              <label className="text-[#6F79A1] text-[0.8rem] font-medium tracking-wide">
-                Bet Amount
-              </label>
-              <div className="flex gap-2 ">
-                <input
-                  type="text"
-                  name="betamount"
-                  value={amount}
-                  // when game starts, user can't change the amount
-                  disabled={gameactive ? true : false}
-                  onChange={(e) =>
-                    setAmount(
-                      parseInt(e.target.value) ? parseInt(e.target.value) : 0
-                    )
-                  }
-                  placeholder="Bet Amount"
-                  className="w-2/3 shadow appearance-none rounded-lg h-8 py-1 px-3 bg-[#1c1e29] text-[#9094A6] text-[0.88rem] leading-tight border border-[#353849] focus:outline-1 focus:shadow-outline"
-                />
-                <div className="buttons flex gap-1">
-                  <button
+          {!auto ? (
+            <>
+              <div id="mines-bet" className="flex flex-col pt-1">
+                <label className="text-[#6F79A1] text-[0.8rem] font-medium tracking-wide">
+                  Bet Amount
+                </label>
+                <div className="flex gap-2 ">
+                  <input
+                    type="text"
+                    name="betamount"
+                    value={amount}
+                    // when game starts, user can't change the amount
                     disabled={gameactive ? true : false}
-                    onClick={() => setAmount(amount * 0.5)}
-                    className="w-[2.5rem] bg-[#323547] rounded-md text-[0.75rem] border border-[#323547] hover:border-[#6F79A1]"
-                  >
-                    1/2
-                  </button>
-                  <button
-                    disabled={gameactive ? true : false}
-                    onClick={() => setAmount(amount * 2)}
-                    className="w-[2.5rem] bg-[#323547] rounded-md text-[0.75rem] border border-[#323547] hover:border-[#6F79A1]"
-                  >
-                    2x
-                  </button>
+                    onChange={(e) =>
+                      setAmount(
+                        parseInt(e.target.value) ? parseInt(e.target.value) : 0
+                      )
+                    }
+                    placeholder="Bet Amount"
+                    className="w-2/3 shadow appearance-none rounded-lg h-8 py-1 px-3 bg-[#1c1e29] text-[#9094A6] text-[0.88rem] leading-tight border border-[#353849] focus:outline-1 focus:shadow-outline"
+                  />
+                  <div className="buttons flex gap-1">
+                    <button
+                      disabled={gameactive ? true : false}
+                      onClick={() => setAmount(amount * 0.5)}
+                      className="w-[2.5rem] bg-[#323547] rounded-md text-[0.75rem] border border-[#323547] hover:border-[#6F79A1]"
+                    >
+                      1/2
+                    </button>
+                    <button
+                      disabled={gameactive ? true : false}
+                      onClick={() => setAmount(amount * 2)}
+                      className="w-[2.5rem] bg-[#323547] rounded-md text-[0.75rem] border border-[#323547] hover:border-[#6F79A1]"
+                    >
+                      2x
+                    </button>
+                  </div>
                 </div>
               </div>
-            </div>
-            {/* </div> */}
-            <div className="flex gap-1 justify-around w-full ">
-              <div className="flex flex-col pt-1 w-[50%]">
+              {/* </div> */}
+              <div className="flex gap-1">
+                <div className="flex flex-col pt-1 w-1/2">
+                  <label className="text-[#6F79A1] text-[0.8rem] font-medium tracking-wide">
+                    TNTs
+                  </label>
+                  <input
+                    type="number"
+                    name="bomb"
+                    value={tnt}
+                    disabled={gameactive ? true : false}
+                    onChange={(e) =>
+                      setTnt(
+                        parseInt(e.target.value) ? parseInt(e.target.value) : 0
+                      )
+                    }
+                    placeholder="TNTs"
+                    className="shadow appearance-none rounded-lg h-8 py-1 px-3 bg-[#1c1e29] text-[#9094A6] text-[0.88rem] leading-tight border border-[#353849] focus:outline-1 focus:shadow-outline"
+                  />
+                </div>
+                <div className="flex flex-col pt-1 w-1/2">
+                  <label className="text-[#6F79A1] text-[0.8rem] font-medium tracking-wide">
+                    Coins
+                  </label>
+                  <input
+                    type="text"
+                    name="coin"
+                    value={coin}
+                    placeholder="Coins"
+                    className="shadow appearance-none rounded-lg h-8 py-1 px-3 bg-[#1c1e29] text-[#9094A6] text-[0.88rem] leading-tight border border-[#353849] focus:outline-1 focus:shadow-outline"
+                  />
+                </div>
+              </div>
+              <div className="flex flex-col pt-1">
+                <label className="text-[#6F79A1] text-[0.8rem] font-medium tracking-wide">
+                  Total profit
+                </label>
+                <input
+                  type="text"
+                  name="profit"
+                  placeholder="Total profit"
+                  className="shadow appearance-none rounded-lg h-8 py-1 px-3 bg-[#1c1e29] text-[#9094A6] text-[0.88rem] leading-tight border border-[#353849] focus:outline-1 focus:shadow-outline"
+                />
+              </div>
+              <div className="relative flex flex-col gap-4 text-[0.9rem] font-medium pt-4">
+                {gameactive != 0 && (
+                  <button className="flex justify-center items-center bg-[##1C1E29] border border-[#353849] rounded-md  py-[0.4rem] tracking-wide text-[#D0D6F5]">
+                    <span>
+                      <MdCasino className="mr-2" />
+                    </span>
+                    <span>Pick Random tile</span>
+                  </button>
+                )}
+                {gameactive ? (
+                  <button
+                    className="bg-[#9562FF] border border-[#A77CFF] rounded-md py-[0.4rem] tracking-wide"
+                    onClick={() => {
+                      showToast("You cashed out", "success");
+                      resetGame();
+                      setAmount(100);
+                    }}
+                  >
+                    Cashout
+                  </button>
+                ) : (
+                  <button
+                    className="bg-[#2f72d7] border border-[#377bbe] rounded-md py-[0.4rem] tracking-wide"
+                    onClick={handleStartGame}
+                  >
+                    Start Game
+                  </button>
+                )}
+              </div>
+            </>
+          ) : (
+            <>
+              <div id="mines-bet" className="pt-1">
+                <label className="text-[#6F79A1] text-[0.8rem] font-medium">
+                  Bet Amount
+                </label>
+                <div className="flex gap-2">
+                  <input
+                    type="text"
+                    name="betamount"
+                    value={amount}
+                    // when game starts, user can't change the amount
+                    disabled={gameactive ? true : false}
+                    onChange={(e) =>
+                      setAmount(
+                        parseInt(e.target.value) ? parseInt(e.target.value) : 0
+                      )
+                    }
+                    placeholder="Bet Amount"
+                    className="w-2/3 shadow appearance-none rounded-lg h-8  py-1 px-3 bg-[#1c1e29] text-[#9094A6] text-[0.88rem] leading-tight border border-[#353849] focus:outline-1 focus:shadow-outline"
+                  />
+                  <div className="buttons flex gap-1">
+                    <button
+                      disabled={gameactive ? true : false}
+                      onClick={() => setAmount(amount * 0.5)}
+                      className="w-[2.5rem] bg-[#323547] rounded-md text-[0.75rem] border border-[#323547] hover:border-[#6F79A1]"
+                    >
+                      1/2
+                    </button>
+                    <button
+                      disabled={gameactive ? true : false}
+                      onClick={() => setAmount(amount * 2)}
+                      className="w-[2.5rem] bg-[#323547] rounded-md text-[0.75rem] border border-[#323547] hover:border-[#6F79A1]"
+                    >
+                      2x
+                    </button>
+                  </div>
+                </div>
+              </div>
+              {/* </div> */}
+              <div className="flex flex-col pt-1">
                 <label className="text-[#6F79A1] text-[0.8rem] font-medium tracking-wide">
                   TNTs
                 </label>
@@ -199,203 +310,94 @@ const Mines = ({ setLoader = (t: boolean) => {} }) => {
                     )
                   }
                   placeholder="TNTs"
-                  className="shadow appearance-none rounded-lg h-8 py-1 px-3 bg-[#1c1e29] text-[#9094A6] text-[0.88rem] border border-[#353849] focus:outline-1 focus:shadow-outline"
+                  className="shadow appearance-none rounded-lg h-8 py-1 px-3 bg-[#1c1e29] text-[#9094A6] text-[0.88rem] leading-tight border border-[#353849] focus:outline-1 focus:shadow-outline"
                 />
               </div>
-              <div className="flex flex-col pt-1 w-[50%]">
+              <div className="flex flex-col pt-1">
                 <label className="text-[#6F79A1] text-[0.8rem] font-medium tracking-wide">
-                  Coins
+                  Number of bets
                 </label>
                 <input
                   type="text"
-                  name="coin"
-                  value={coin}
-                  placeholder="Coins"
-                  className="shadow appearance-none rounded-lg h-8 py-1 px-3 bg-[#1c1e29] text-[#9094A6] text-[0.88rem] border border-[#353849] focus:outline-1 focus:shadow-outline"
+                  name="numberofbets"
+                  className="shadow appearance-none rounded-lg h-8 py-1 px-3 bg-[#1c1e29] text-[#9094A6] text-[0.88rem] leading-tight border border-[#353849] focus:outline-1 focus:shadow-outline"
                 />
               </div>
-            </div>
-            <div className="flex flex-col pt-1">
-              <label className="text-[#6F79A1] text-[0.8rem] font-medium tracking-wide">
-                Total profit
-              </label>
-              <input
-                type="text"
-                name="profit"
-                placeholder="Total profit"
-                className="shadow appearance-none rounded-lg h-8 py-1 px-3 bg-[#1c1e29] text-[#9094A6] text-[0.88rem] leading-tight border border-[#353849] focus:outline-1 focus:shadow-outline"
-              />
-            </div>
-            <div className="relative flex flex-col gap-4 text-[0.9rem] font-medium pt-4">
-              {gameactive != 0 && (
-                <button className="flex justify-center items-center bg-[##1C1E29] border border-[#353849] rounded-md  py-[0.4rem] tracking-wide text-[#D0D6F5]">
-                  <span>
-                    <MdCasino className="mr-2" />
-                  </span>
-                  <span>Pick Random tile</span>
-                </button>
-              )}
-              {gameactive ? (
-                <button
-                  className="bg-[#9562FF] border border-[#A77CFF] rounded-md py-[0.4rem] tracking-wide"
-                  onClick={() => {
-                    showToast("You cashed out", "success");
-                    resetGame();
-                    setAmount(100);
-                  }}
-                >
-                  Cashout
-                </button>
-              ) : (
-                <button
-                  className="bg-[#2f72d7] border border-[#377bbe] rounded-md py-[0.4rem] tracking-wide"
-                  onClick={handleStartGame}
-                >
-                  Start Game
-                </button>
-              )}
-            </div>
-          </>
-            ):(
-          <>
-            <div id="mines-bet" className="pt-1">
-              <label className="text-[#6F79A1] text-[0.8rem] font-medium">
-                Bet Amount
-              </label>
-              <div className="flex gap-2">
-                <input
-                  type="text"
-                  name="betamount"
-                  value={amount}
-                  // when game starts, user can't change the amount
-                  disabled={gameactive ? true : false}
-                  onChange={(e) =>
-                    setAmount(
-                      parseInt(e.target.value) ? parseInt(e.target.value) : 0
-                    )
-                  }
-                  placeholder="Bet Amount"
-                  className="w-2/3 shadow appearance-none rounded-lg h-8  py-1 px-3 bg-[#1c1e29] text-[#9094A6] text-[0.88rem] leading-tight border border-[#353849] focus:outline-1 focus:shadow-outline"
-                />
-                <div className="buttons flex gap-1">
-                  <button
-                    disabled={gameactive ? true : false}
-                    onClick={() => setAmount(amount * 0.5)}
-                    className="w-[2.5rem] bg-[#323547] rounded-md text-[0.75rem] border border-[#323547] hover:border-[#6F79A1]"
-                  >
-                    1/2
+              <div className="flex flex-col pt-1">
+                <label className="text-[#6F79A1] text-[0.8rem] font-medium tracking-wide">
+                  On Win
+                </label>
+                <div className="flex flex-row">
+                  <button className="px-2 mr-1 text-[#F5F0FF] text-[0.7rem] font-medium bg-[#323547] rounded-md">
+                    Reset
                   </button>
-                  <button
-                    disabled={gameactive ? true : false}
-                    onClick={() => setAmount(amount * 2)}
-                    className="w-[2.5rem] bg-[#323547] rounded-md text-[0.75rem] border border-[#323547] hover:border-[#6F79A1]"
-                  >
-                    2x
-                  </button>
+                  <BsGraphUpArrow className="text-white font-bold text-[1rem] m-auto" />
+                  <input
+                    type="text"
+                    name="onwin"
+                    className="w-1/2 shadow appearance-none rounded-lg h-8 py-1 px-3 bg-[#1c1e29] text-[#9094A6] text-[0.88rem] leading-tight border border-[#353849] focus:outline-1 focus:shadow-outline"
+                  />
                 </div>
               </div>
-            </div>
-            <div className="pt-1">
-              <label className="text-[#6F79A1] text-[0.8rem] font-medium tracking-wide">
-                TNTs
-              </label>
-              <input
-                type="number"
-                name="bomb"
-                value={tnt}
-                disabled={gameactive ? true : false}
-                onChange={(e) =>
-                  setTnt(parseInt(e.target.value) ? parseInt(e.target.value) : 0)
-                }
-                placeholder="TNTs"
-                className="shadow appearance-none rounded-lg h-8 py-1 px-3 bg-[#1c1e29] text-[#9094A6] text-[0.88rem] leading-tight border border-[#353849] focus:outline-1 focus:shadow-outline"
-              />
-            </div>
-            <div className="pt-1">
-              <label className="text-[#6F79A1] text-[0.8rem] font-medium tracking-wide">
-                Number of bets
-              </label>
-              <input
-                type="text"
-                name="numberofbets"
-                className="shadow appearance-none rounded-lg h-8 py-1 px-3 bg-[#1c1e29] text-[#9094A6] text-[0.88rem] leading-tight border border-[#353849] focus:outline-1 focus:shadow-outline"
-              />
-            </div>
-            <div className="pt-1">
-              <label className="text-[#6F79A1] text-[0.8rem] font-medium tracking-wide">
-                On Win
-              </label>
-              <div className="flex flex-row">
-                <button className="px-2 mr-1 text-[#F5F0FF] text-[0.7rem] font-medium bg-[#323547] rounded-md">
-                  Reset
-                </button>
-                <BsGraphUpArrow className="text-white font-bold text-[1rem] m-auto" />
+              <div className="flex flex-col pt-1">
+                <label className="text-[#6F79A1] text-[0.8rem] font-medium tracking-wide">
+                  On Loss
+                </label>
+                <div className="flex flex-row">
+                  <button className="px-2 mr-1 text-[#F5F0FF] text-[0.7rem] font-medium bg-[#323547] rounded-md">
+                    Reset
+                  </button>
+                  <BsGraphDownArrow className="text-white font-bold text-[1rem] m-auto" />
+                  <input
+                    type="text"
+                    name="onloss"
+                    className="w-1/2 shadow appearance-none rounded-lg h-8 py-1 px-3 bg-[#1c1e29] text-[#9094A6] text-[0.88rem] leading-tight border border-[#353849] focus:outline-1 focus:shadow-outline"
+                  />
+                </div>
+              </div>
+              <div className="flex flex-col pt-1">
+                <label className="text-[#6F79A1] text-[0.8rem] font-medium tracking-wide">
+                  Stop on profit
+                </label>
                 <input
                   type="text"
-                  name="onwin"
-                  className="w-1/2 shadow appearance-none rounded-lg h-8 py-1 px-3 bg-[#1c1e29] text-[#9094A6] text-[0.88rem] leading-tight border border-[#353849] focus:outline-1 focus:shadow-outline"
+                  name="stopprofit"
+                  className="shadow appearance-none rounded-lg h-8 py-1 px-3 bg-[#1c1e29] text-[#9094A6] text-[0.88rem] leading-tight border border-[#353849] focus:outline-1 focus:shadow-outline"
                 />
               </div>
-            </div>
-            <div className="pt-1">
-              <label className="text-[#6F79A1] text-[0.8rem] font-medium tracking-wide">
-                On Loss
-              </label>
-              <div className="flex flex-row">
-                <button className="px-2 mr-1 text-[#F5F0FF] text-[0.7rem] font-medium bg-[#323547] rounded-md">
-                  Reset
-                </button>
-                <BsGraphDownArrow className="text-white font-bold text-[1rem] m-auto" />
+              <div className="flex flex-col pt-1">
+                <label className="text-[#6F79A1] text-[0.8rem] font-medium tracking-wide">
+                  Stop on loss
+                </label>
                 <input
                   type="text"
-                  name="onloss"
-                  className="w-1/2 shadow appearance-none rounded-lg h-8 py-1 px-3 bg-[#1c1e29] text-[#9094A6] text-[0.88rem] leading-tight border border-[#353849] focus:outline-1 focus:shadow-outline"
+                  name="stoploss"
+                  className="shadow appearance-none rounded-lg h-8 py-1 px-3 bg-[#1c1e29] text-[#9094A6] text-[0.88rem] leading-tight border border-[#353849] focus:outline-1 focus:shadow-outline"
                 />
               </div>
-            </div>
-            <div className="pt-1">
-              <label className="text-[#6F79A1] text-[0.8rem] font-medium tracking-wide">
-                Stop on profit
-              </label>
-              <input
-                type="text"
-                name="stopprofit"
-                className="shadow appearance-none rounded-lg h-8 py-1 px-3 bg-[#1c1e29] text-[#9094A6] text-[0.88rem] leading-tight border border-[#353849] focus:outline-1 focus:shadow-outline"
-              />
-            </div>
-            <div className="pt-1">
-              <label className="text-[#6F79A1] text-[0.8rem] font-medium tracking-wide">
-                Stop on loss
-              </label>
-              <input
-                type="text"
-                name="stoploss"
-                className="shadow appearance-none rounded-lg h-8 py-1 px-3 bg-[#1c1e29] text-[#9094A6] text-[0.88rem] leading-tight border border-[#353849] focus:outline-1 focus:shadow-outline"
-              />
-            </div>
-            <div className="relative flex flex-col gap-4 text-[0.9rem] font-medium pt-1 mt-1">
-              {gameactive ? (
-                <button
-                  className="bg-[#9562FF] border border-[#A77CFF] rounded-md py-[0.4rem] tracking-wide"
-                  onClick={() => {
-                    showToast("You cashed out", "success");
-                    resetGame();
-                    setAmount(100);
-                  }}
-                >
-                  Cashout
-                </button>
-              ) : (
-                <button
-                  className="bg-[#2f72d7] border border-[#377bbe] rounded-md py-[0.4rem] tracking-wide"
-                  onClick={handleStartGame}
-                >
-                  Start Game
-                </button>
-              )}
-            </div>
-          </>
-            )}
+              <div className="relative flex flex-col gap-4 text-[0.9rem] font-medium pt-1 mt-1">
+                {gameactive ? (
+                  <button
+                    className="bg-[#9562FF] border border-[#A77CFF] rounded-md py-[0.4rem] tracking-wide"
+                    onClick={() => {
+                      showToast("You cashed out", "success");
+                      resetGame();
+                      setAmount(100);
+                    }}
+                  >
+                    Cashout
+                  </button>
+                ) : (
+                  <button
+                    className="bg-[#2f72d7] border border-[#377bbe] rounded-md py-[0.4rem] tracking-wide"
+                    onClick={handleStartGame}
+                  >
+                    Start Game
+                  </button>
+                )}
+              </div>
+            </>
+          )}
         </form>
       </div>
 
