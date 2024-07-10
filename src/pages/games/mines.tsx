@@ -137,12 +137,12 @@ const Mines = ({ setLoader = (t: boolean) => {} }) => {
             className={`flex justify-center duration-1000 rounded-md px-6 py-1 text-[0.8rem] font-medium border border-[#0b0c13] hover:border-[#b5a9a9]
             ${ auto ? "bg-[#1F2230] text-[#F5F0FF]" : " text-slate-500" } 
               `}
-              // className="flex justify-center rounded-md px-6 py-1 border border-[#0b0c13] hover:border-[#b5a9a9]"
-            >
-              Auto
-            </button>
-          </div>
-        <form id="minesform">
+            // className="flex justify-center rounded-md px-6 py-1 border border-[#0b0c13] hover:border-[#b5a9a9]"
+          >
+            Auto
+          </button>
+        </div>
+        <form id="minesform" onSubmit={(e) => e.preventDefault()}>
         {!auto ? (
           <>
           <div id="mines-bet" className="flex flex-col pt-1">
