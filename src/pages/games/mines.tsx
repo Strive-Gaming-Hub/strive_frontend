@@ -142,7 +142,7 @@ const Mines = ({ setLoader = (t: boolean) => {} }) => {
             Auto
           </button>
         </div>
-        <form id="minesform">
+        <form id="minesform" onSubmit={(e) => e.preventDefault()}>
         {!auto ? (
           <>
             <div id="mines-bet" className="flex flex-col pt-1">
@@ -184,7 +184,7 @@ const Mines = ({ setLoader = (t: boolean) => {} }) => {
             </div>
             {/* </div> */}
             <div className="flex gap-1 justify-around w-full ">
-              <div className="flex flex-col pt-1 w-1/2">
+              <div className="flex flex-col pt-1 w-[50%]">
                 <label className="text-[#6F79A1] text-[0.8rem] font-medium tracking-wide">
                   TNTs
                 </label>
@@ -202,7 +202,7 @@ const Mines = ({ setLoader = (t: boolean) => {} }) => {
                   className="shadow appearance-none rounded-lg h-8 py-1 px-3 bg-[#1c1e29] text-[#9094A6] text-[0.88rem] border border-[#353849] focus:outline-1 focus:shadow-outline"
                 />
               </div>
-              <div className="flex flex-col pt-1 w-1/2">
+              <div className="flex flex-col pt-1 w-[50%]">
                 <label className="text-[#6F79A1] text-[0.8rem] font-medium tracking-wide">
                   Coins
                 </label>
